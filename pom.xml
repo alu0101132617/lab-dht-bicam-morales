@@ -1,0 +1,258 @@
+<!-- 
+POM (Project Object Model) para el proyecto BiCIAM.
+Define las dependencias y plugins necesarios para:
+- Pruebas unitarias con JUnit 5
+- Análisis de cobertura con JaCoCo
+- Análisis de estilo con Checkstyle
+- Análisis estático con PMD 
+- Análisis SAST con SpotBugs + FindSecBugs
+- Análisis de vulnerabilidades con OWASP Dependency-Check
+- Integración con SonarQube/SonarCloud
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- Metadatos básicos del proyecto -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>es.ull.esit.app</groupId>
+  <artifactId>BiCIAM</artifactId>
+  <version>1.0.0</version>
+  <name>BiCIAM</name>
+
+  <!-- Propiedades globales -->
+  <properties>
+    <!-- Versión de Java -->
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+
+    <!-- Codificación del proyecto -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Plugin de cobertura JaCoCo -->
+    <jacoco.version>0.8.10</jacoco.version>
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+
+    <!-- Configuración de SonarQube local (SonarCloud luego en el perfil) -->
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+  </properties>
+
+  <!-- Dependencias del proyecto -->
+  <dependencies>
+
+    <!-- JUnit 5: API de pruebas -->
+    <!-- Fase: test -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5: Motor de ejecución -->
+    <!-- Fase: test -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JUnit 5: Tests parametrizados -->
+    <!-- Fase: test -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- JExcelAPI: manipulación de ficheros Excel (.xls) -->
+    <!-- Fase: compile -->
+    <dependency>
+      <groupId>net.sourceforge.jexcelapi</groupId>
+      <artifactId>jxl</artifactId>
+      <version>2.6.12</version>
+    </dependency>
+
+  </dependencies>
+
+  <!-- Plugins de análisis, calidad, seguridad y pruebas -->
+  <build>
+    <plugins>
+
+      <!-- Compilador Java 17 -->
+      <!-- Fase: compile -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <!-- Ejecutor de pruebas JUnit 5 -->
+      <!-- Fase: test -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <useModulePath>false</useModulePath>
+        </configuration>
+      </plugin>
+
+      <!-- JaCoCo: cobertura de código -->
+      <!-- Fase: prepare-agent (antes de las pruebas) y test (después de las pruebas) -->
+      <!-- Ruta de los informes de cobertura: target/jacoco-report -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+
+          <!-- Preparar el agente para recolectar cobertura -->
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+
+          <!-- Generar informe (HTML y XML) después de las pruebas -->
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <configuration>
+              <!-- Directorio de salida de los informes -->
+              <outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
+              <!-- Generar informes en HTML y XML -->
+              <reports>
+                <report>html</report>
+                <report>xml</report>
+              </reports>
+
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Checkstyle: estilo del código -->
+      <!-- Fase: validate -->
+      <!-- Ruta del informe de estilo: target/checkstyle-result.xml -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <!-- Archivo de configuración -->
+          <configLocation>checkstyle.xml</configLocation>
+          <!-- Codificación de caracteres -->
+          <encoding>UTF-8</encoding>
+          <!-- Mostrar resultados en consola -->
+          <consoleOutput>true</consoleOutput>
+        </configuration>
+      </plugin>
+
+      <!-- PMD: análisis estático del código -->
+      <!-- Fase: verify -->
+      <!-- Ruta del informe de PMD: target/pmd.xml -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.21.2</version>
+        <configuration>
+          <!-- Mostrar reglas que fallan en la consola -->
+          <printFailingRules>true</printFailingRules>
+          <!-- No fallar la build por violaciones -->
+          <failOnViolation>false</failOnViolation>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <!-- SpotBugs + FindSecBugs: SAST y análisis de seguridad del código -->
+      <!-- Fase: verify -->
+      <!-- Ruta del informe de SpotBugs: target/spotbugs/spotbugs.xml -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.8.3.0</version>
+        <configuration>
+          <!-- Análisis profundo -->
+          <effort>Max</effort>
+          <!-- Nivel mínimo de severidad de los bugs a reportar: Low, Medium, High -->
+          <threshold>Low</threshold>
+          <!-- Generar informe en XML -->
+          <xmlOutput>true</xmlOutput>
+          <!-- Directorio de salida del informe XML: target/spotbugs/spotbugs.xml -->
+          <xmlOutputDirectory>${project.build.directory}/spotbugs</xmlOutputDirectory>
+          <!-- Directorio del código fuente -->
+          <sourceDirectories>
+            <directory>${project.basedir}/src/main/java</directory>
+          </sourceDirectories>
+        </configuration>
+        <dependencies>
+          <!-- Plugin FindSecBugs: análisis de seguridad del código -->
+          <dependency>
+            <groupId>com.h3xstream.findsecbugs</groupId>
+            <artifactId>findsecbugs-plugin</artifactId>
+            <version>1.12.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <!-- OWASP Dependency-Check -->
+      <!-- Fase: verify -->
+      <!-- Ruta del informe de OWASP Dependency-Check: target/dependency-check-report.xml -->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>9.1.0</version>
+        <configuration>
+          <!-- Fallar la build si se encuentran vulnerabilidades con CVSS mayor o igual a 10 -->
+          <failBuildOnCVSS>10</failBuildOnCVSS>
+        </configuration>
+      </plugin>
+
+      <!-- SonarQube -->
+      <!-- Fase: verify -->
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.9.1.2184</version>
+      </plugin>     
+
+    </plugins>
+  </build>
+
+  <!-- Perfil para SonarCloud / SonarQube (ejecutar con -Psonar) -->
+  <profiles>
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <!-- Ajustar estos valores para SonarCloud o SonarQube remoto -->
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <!-- <sonar.organization>tu_organizacion</sonar.organization> -->
+        <!-- <sonar.login>TU_TOKEN_SONAR</sonar.login> -->
+      </properties>
+    </profile>
+  </profiles>
+   
+
+</project>

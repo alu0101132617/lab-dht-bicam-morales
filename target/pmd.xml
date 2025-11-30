@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.55.0" timestamp="2025-11-30T22:28:14.003">
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/ProbabilisticSampling.java">
+<violation beginline="59" endline="59" begincolumn="18" endcolumn="140" rule="PrimitiveWrapperInstantiation" ruleset="Best Practices" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="ProbabilisticSampling" method="sampling" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_bestpractices.html#primitivewrapperinstantiation" priority="3">
+Do not use `new Integer(...)`, prefer `Integer.valueOf(...)`
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/RouletteSelection.java">
+<violation beginline="54" endline="54" begincolumn="12" endcolumn="24" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="RouletteSelection" method="selection" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="54" endline="54" begincolumn="31" endcolumn="50" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="RouletteSelection" method="selection" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="55" endline="55" begincolumn="9" endcolumn="54" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="RouletteSelection" method="selection" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="55" endline="55" begincolumn="61" endcolumn="107" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="RouletteSelection" method="selection" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/SteadyStateReplace.java">
+<violation beginline="20" endline="20" begincolumn="19" endcolumn="36" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="SteadyStateReplace" method="replace" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="20" endline="20" begincolumn="43" endcolumn="66" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="SteadyStateReplace" method="replace" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="36" endline="36" begincolumn="20" endcolumn="37" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="SteadyStateReplace" method="replace" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="36" endline="36" begincolumn="44" endcolumn="67" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="SteadyStateReplace" method="replace" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/UniformCrossover.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="66" rule="UnnecessaryImport" ruleset="Code Style" package="main.java.es.ull.esit.app.evolutionary_algorithms.complement" class="UniformCrossover" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#unnecessaryimport" priority="4">
+Unused import 'main.java.es.ull.esit.app.metaheurictics.strategy.Strategy'
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/acceptation_type/AcceptNotBadT.java">
+<violation beginline="25" endline="25" begincolumn="9" endcolumn="84" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="AcceptNotBadT" method="acceptCandidate" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="26" endline="26" begincolumn="10" endcolumn="27" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="AcceptNotBadT" method="acceptCandidate" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="32" endline="32" begincolumn="9" endcolumn="84" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="AcceptNotBadT" method="acceptCandidate" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="33" endline="33" begincolumn="10" endcolumn="45" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="AcceptNotBadT" method="acceptCandidate" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/acceptation_type/AcceptNotDominated.java">
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="73" rule="UnnecessaryImport" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="AcceptNotDominated" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#unnecessaryimport" priority="4">
+Unnecessary import from the current package 'main.java.es.ull.esit.app.local_search.acceptation_type.Dominance'
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/acceptation_type/Dominance.java">
+<violation beginline="31" endline="33" begincolumn="5" endcolumn="5" rule="CollapsibleIfStatements" ruleset="Design" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="Dominance" method="ListDominance" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="124" endline="124" begincolumn="7" endcolumn="20" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="Dominance" method="dominance" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="124" endline="124" begincolumn="27" endcolumn="85" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.acceptation_type" class="Dominance" method="dominance" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/candidate_type/GreaterCandidate.java">
+<violation beginline="23" endline="23" begincolumn="73" endcolumn="73" rule="UnnecessarySemicolon" ruleset="Code Style" package="main.java.es.ull.esit.app.local_search.candidate_type" class="GreaterCandidate" method="stateSearch" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#unnecessarysemicolon" priority="3">
+Unnecessary semicolon
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheurictics/strategy/Strategy.java">
+<violation beginline="168" endline="168" begincolumn="10" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheurictics.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="171" endline="171" begincolumn="10" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheurictics.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="215" endline="215" begincolumn="10" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheurictics.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="218" endline="218" begincolumn="10" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheurictics.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/DistributionEstimationAlgorithm.java">
+<violation beginline="184" endline="184" begincolumn="10" endcolumn="28" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="DistributionEstimationAlgorithm" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="184" endline="184" begincolumn="35" endcolumn="85" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="DistributionEstimationAlgorithm" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/EvolutionStrategies.java">
+<violation beginline="134" endline="134" begincolumn="10" endcolumn="28" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="EvolutionStrategies" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="134" endline="134" begincolumn="35" endcolumn="85" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="EvolutionStrategies" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/GeneticAlgorithm.java">
+<violation beginline="162" endline="162" begincolumn="10" endcolumn="28" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="GeneticAlgorithm" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="162" endline="162" begincolumn="35" endcolumn="85" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="GeneticAlgorithm" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiGenerator.java">
+<violation beginline="58" endline="58" begincolumn="9" endcolumn="70" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="initializeGenerators" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="58" endline="58" begincolumn="77" endcolumn="138" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="initializeGenerators" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="58" endline="58" begincolumn="145" endcolumn="204" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="initializeGenerators" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="58" endline="58" begincolumn="211" endcolumn="348" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="initializeGenerators" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="58" endline="58" begincolumn="284" endcolumn="347" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="initializeGenerators" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="290" endline="290" begincolumn="11" endcolumn="23" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="roulette" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="290" endline="290" begincolumn="30" endcolumn="49" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="roulette" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="291" endline="291" begincolumn="8" endcolumn="53" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="roulette" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="291" endline="291" begincolumn="60" endcolumn="106" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiGenerator" method="roulette" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiobjectiveHillClimbingDistance.java">
+<violation beginline="62" endline="62" begincolumn="25" endcolumn="37" rule="PrimitiveWrapperInstantiation" ruleset="Best Practices" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiobjectiveHillClimbingDistance" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_bestpractices.html#primitivewrapperinstantiation" priority="3">
+Do not use `new Double(...)`, prefer `Double.valueOf(...)`
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiobjectiveTabuSearch.java">
+<violation beginline="88" endline="88" begincolumn="13" endcolumn="49" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiobjectiveTabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="88" endline="88" begincolumn="56" endcolumn="73" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="MultiobjectiveTabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/Particle.java">
+<violation beginline="79" endline="79" begincolumn="83" endcolumn="101" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="Particle" method="UpdateVelocity" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/ParticleSwarmOptimization.java">
+<violation beginline="105" endline="105" begincolumn="10" endcolumn="28" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="ParticleSwarmOptimization" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="105" endline="105" begincolumn="35" endcolumn="85" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="ParticleSwarmOptimization" method="getListStateRef" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/TabuSearch.java">
+<violation beginline="112" endline="112" begincolumn="13" endcolumn="49" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="TabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="112" endline="112" begincolumn="56" endcolumn="73" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="TabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="113" endline="113" begincolumn="11" endcolumn="70" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="TabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="126" endline="126" begincolumn="11" endcolumn="70" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.metaheuristics.generators" class="TabuSearch" method="updateReference" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/problem/extension/MetricasMultiobjetivo.java">
+<violation beginline="67" endline="67" begincolumn="21" endcolumn="83" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.problem.extension" class="MetricasMultiobjetivo" method="Dispersion" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="85" endline="85" begincolumn="31" endcolumn="42" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.problem.extension" class="MetricasMultiobjetivo" method="Dispersion" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/strategy/Strategy.java">
+<violation beginline="168" endline="168" begincolumn="10" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="171" endline="171" begincolumn="10" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="215" endline="215" begincolumn="10" endcolumn="68" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="218" endline="218" begincolumn="10" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="main.java.es.ull.esit.app.strategy" class="Strategy" method="executeStrategy" externalInfoUrl="https://pmd.github.io/pmd-6.55.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<suppressedviolation filename="/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiobjectiveTabuSearch.java" suppressiontype="annotation" msg="Avoid unused local variables such as 'problem'." usermsg=""></suppressedviolation>
+</pmd>

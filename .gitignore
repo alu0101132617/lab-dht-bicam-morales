@@ -1,0 +1,100 @@
+##############################
+# Maven
+##############################
+target/
+log/
+logs/
+dependency-reduced-pom.xml
+
+# Archivos temporales de Maven y descargas
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+
+##############################
+# IntelliJ IDEA
+##############################
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+
+##############################
+# Eclipse
+##############################
+.project
+.classpath
+.settings/
+bin/
+
+
+##############################
+# VS Code
+##############################
+.vscode/
+.history/
+
+
+##############################
+# Java / General
+##############################
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.log
+*.tmp
+*.swp
+*.swo
+.DS_Store
+
+
+##############################
+# Informes de análisis
+##############################
+
+# JaCoCo
+jacoco.exec
+target/jacoco.exec
+target/jacoco-report/
+
+# SpotBugs + FindSecBugs
+target/spotbugs/
+spotbugsXml.xml
+
+# PMD
+target/pmd.xml
+
+# Checkstyle
+target/checkstyle-result.xml
+
+# OWASP Dependency-Check
+target/dependency-check-report.*
+target/dependency-check/
+
+# Surefire (JUnit)
+target/surefire-reports/
+
+
+##############################
+# Docker
+##############################
+docker-build/
+*.tar
+
+
+##############################
+# Sistema operativo
+##############################
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# macOS
+.DS_Store
