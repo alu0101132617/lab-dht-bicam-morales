@@ -1,44 +1,50 @@
-package main.java.es.ull.esit.app.problem.extension;
+package es.ull.esit.app.problem.extension;
 
 import java.util.ArrayList;
 
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
 
-import main.java.es.ull.esit.app.problem.definition.ObjetiveFunction;
-import main.java.es.ull.esit.app.problem.definition.State;
-import main.java.es.ull.esit.app.problem.definition.Problem.ProblemType;
+import es.ull.esit.app.problem.definition.ObjetiveFunction;
+import es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.Problem.ProblemType;
 
+/**
+ * Class that implements the pure multi-objective solution method.
+ */
 public class MultiObjetivoPuro extends SolutionMethod {
 
+  /**
+   * Constructor.
+   * 
+   * @param name [String] Name of the solution method.
+   */
 	@Override
 	public void evaluationState(State state) {
-		// TODO Auto-generated method stub
 		double tempEval = -1;
-		ArrayList<Double> evaluation = new ArrayList<Double>(Strategy.getStrategy().getProblem().getFunction().size());
+		ArrayList<Double> evaluation = new ArrayList<>(Strategy.getStrategy().getProblem().getFunction().size());
 		for (int i = 0; i < Strategy.getStrategy().getProblem().getFunction().size(); i++)
 		{
-			ObjetiveFunction objfunction = (ObjetiveFunction)Strategy.getStrategy().getProblem().getFunction().get(i);
-			if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.Maximizar)){
-				if(objfunction.getTypeProblem().equals(ProblemType.Maximizar))
+			ObjetiveFunction objfunction = Strategy.getStrategy().getProblem().getFunction().get(i);
+			if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.MAXIMIZAR)){
+				if(objfunction.getTypeProblem().equals(ProblemType.MAXIMIZAR))
 				{
-					tempEval = objfunction.Evaluation(state);
+					tempEval = objfunction.evaluation(state);
 				}
 				else{
-					tempEval = 1-objfunction.Evaluation(state);
+					tempEval = 1-objfunction.evaluation(state);
 				}
 			}
 			else{
-				if(objfunction.getTypeProblem().equals(ProblemType.Maximizar))
+				if(objfunction.getTypeProblem().equals(ProblemType.MAXIMIZAR))
 				{
-					tempEval = 1-objfunction.Evaluation(state);
+					tempEval = 1-objfunction.evaluation(state);
 				}
 				else{
-					tempEval = objfunction.Evaluation(state);
+					tempEval = objfunction.evaluation(state);
 				}
 			}
 			evaluation.add(tempEval);
 		}
-		//evaluation.add( (double) -1);
 		state.setEvaluation(evaluation);
 	}
 

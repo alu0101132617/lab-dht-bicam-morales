@@ -1,20 +1,20 @@
-package main.java.es.ull.esit.app.metaheuristics.generators;
+package es.ull.esit.app.metaheuristics.generators;
 
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import main.java.es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
-import main.java.es.ull.esit.app.factory_method.FactoryAcceptCandidate;
+import es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
+import es.ull.esit.app.factory_method.FactoryAcceptCandidate;
 
-import main.java.es.ull.esit.app.problem.definition.State;
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptType;
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
-import main.java.es.ull.esit.app.local_search.candidate_type.CandidateType;
-import main.java.es.ull.esit.app.local_search.candidate_type.CandidateValue;
-import main.java.es.ull.esit.app.local_search.complement.StrategyType;
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.local_search.acceptation_type.AcceptType;
+import es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
+import es.ull.esit.app.local_search.candidate_type.CandidateType;
+import es.ull.esit.app.local_search.candidate_type.CandidateValue;
+import es.ull.esit.app.local_search.complement.StrategyType;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
 
 public class MultiobjectiveHillClimbingDistance extends Generator{
 
@@ -24,7 +24,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 	protected CandidateType typeCandidate;
 	protected State stateReferenceHC;
 	protected IFFactoryAcceptCandidate ifacceptCandidate;
-	protected GeneratorType Generatortype;
+	protected GeneratorType generatorType;
 	protected List<State> listStateReference = new ArrayList<State>(); 
 	protected float weight;
 	protected List<Float> listTrace = new ArrayList<Float>();
@@ -40,7 +40,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 		this.strategy = StrategyType.NORMAL;
 		this.typeCandidate = CandidateType.NotDominatedCandidate;
 		this.candidatevalue = new CandidateValue();
-		this.Generatortype = GeneratorType.MultiobjectiveHillClimbingDistance;
+		this.generatorType = GeneratorType.MultiobjectiveHillClimbingDistance;
 		this.weight = 50;
 		listTrace.add(weight);
 	}
@@ -57,24 +57,24 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 	public void updateReference(State stateCandidate, Integer countIterationsCurrent) throws IllegalArgumentException, SecurityException, ClassNotFoundException, 
 	InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		//Agregando la primera soluci�n a la lista de soluciones no dominadas
-		if(Strategy.getStrategy().listRefPoblacFinal.size() == 0){
-			Strategy.getStrategy().listRefPoblacFinal.add(stateReferenceHC.clone());
+		if(Strategy.getStrategy().getListRefPoblacFinal().size() == 0){
+			Strategy.getStrategy().getListRefPoblacFinal().add(stateReferenceHC.copy());
 			distanceSolution.add(new Double(0));
 		}
 		ifacceptCandidate = new FactoryAcceptCandidate();
 		AcceptableCandidate candidate = ifacceptCandidate.createAcceptCandidate(typeAcceptation);
-		State lastState = Strategy.getStrategy().listRefPoblacFinal.get(Strategy.getStrategy().listRefPoblacFinal.size()-1);
+		State lastState = Strategy.getStrategy().getListRefPoblacFinal().get(Strategy.getStrategy().getListRefPoblacFinal().size()-1);
 		List<State> neighborhood = new ArrayList<State>();
 		neighborhood = Strategy.getStrategy().getProblem().getOperator().generatedNewState(stateReferenceHC, sizeNeighbors);
 		int i= 0;
 //		Boolean restart= true;
 
 //		while (restart==true) {
-			Boolean accept = candidate.acceptCandidate(lastState, stateCandidate.clone());
+			Boolean accept = candidate.acceptCandidate(lastState, stateCandidate.copy());
 			if(accept.equals(true)){
-				stateReferenceHC = stateCandidate.clone();
+				stateReferenceHC = stateCandidate.copy();
 				visitedState = new ArrayList<State>();
-				lastState=stateReferenceHC.clone();
+				lastState=stateReferenceHC.copy();
 //				restart=false;
 			}
 
@@ -83,10 +83,10 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 				boolean stop = false;
 				while (i < neighborhood.size()&& stop==false) {
 					if (Contain(neighborhood.get(i))==false) {
-						stateReferenceHC = SolutionMoreDistance(Strategy.getStrategy().listRefPoblacFinal, distanceSolution);
+						stateReferenceHC = SolutionMoreDistance(Strategy.getStrategy().getListRefPoblacFinal(), distanceSolution);
 						visitedState.add(stateReferenceHC);
 						stop=true;
-						lastState=stateReferenceHC.clone();
+						lastState=stateReferenceHC.copy();
 //						restart=false;
 					}
 					i++;
@@ -95,17 +95,17 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 				while (stop == false && coutrestart < sizeNeighbors && accept==false) {
 					stateCandidate = Strategy.getStrategy().getProblem().getOperator().generateRandomState(1).get(0);
 					if (Contain(stateCandidate)==false) {
-						Strategy.getStrategy().getProblem().Evaluate(stateCandidate);  
+						Strategy.getStrategy().getProblem().evaluate(stateCandidate);  
 						visitedState.add(stateCandidate);
 						stop=true;
 						coutrestart++;
-						accept = candidate.acceptCandidate(lastState, stateCandidate.clone());
+						accept = candidate.acceptCandidate(lastState, stateCandidate.copy());
 					}
 				}
 				if(accept.equals(true)){
-					stateReferenceHC = stateCandidate.clone();
+					stateReferenceHC = stateCandidate.copy();
 					visitedState = new ArrayList<State>();
-					lastState = stateReferenceHC.clone();
+					lastState = stateReferenceHC.copy();
 					//tomar xc q pertenesca a la vecindad de xa
 				}
 			}
@@ -133,7 +133,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 
 	@Override
 	public List<State> getReferenceList() {
-		listStateReference.add(stateReferenceHC.clone());
+		listStateReference.add(stateReferenceHC.copy());
 		return listStateReference;
 	}
 
@@ -152,16 +152,16 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 	}
 
 	public GeneratorType getGeneratorType() {
-		return Generatortype;
+		return generatorType;
 	}
 
-	public void setGeneratorType(GeneratorType Generatortype) {
-		this.Generatortype = Generatortype;
+	public void setGeneratorType(GeneratorType generatorType) {
+		this.generatorType = generatorType;
 	}
 
 	@Override
 	public GeneratorType getType() {
-		return this.Generatortype;
+		return this.generatorType;
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 		return null;
 	}
 
-	public static List<Double> DistanceCalculateAdd(List<State> solution) {
+	public static List<Double> distanceCalculateAdd(List<State> solution) {
 		State[] solutions = solution.toArray(new State[solution.size()]);
 		Double distance = 0.0;
 		List<Double>listDist=new ArrayList<Double>();
@@ -178,7 +178,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 		//Actualizando las distancias de todos los elmentos excepto el nuevo insertando
 		for (int k = 0; k < solutions.length-1; k++) {
 			State solA = solutions[k];
-			distance = solA.Distance(lastSolution);
+			distance = solA.distance(lastSolution);
 			listDist.add(distanceSolution.get(k)+distance);
 //			distanceSolution.set(k, distanceSolution.get(k) + distance);
 		}
@@ -191,7 +191,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 		
 			for (int l = 0; l < solutions.length-1; l++) {
 				State solB = solutions[l];
-				distance += lastSolution.Distance(solB);
+				distance += lastSolution.distance(solB);
 			}
 			listDist.add(distance);
 //			distanceSolution.add(distance);
@@ -207,7 +207,7 @@ public class MultiobjectiveHillClimbingDistance extends Generator{
 		boolean found = false;
 		for (Iterator<State> iter = visitedState.iterator(); iter.hasNext();) {
 			State element = (State) iter.next();
-			if(element.Comparator(state)){
+			if(element.comparator(state)){
 				found = true;
 			}
 		}

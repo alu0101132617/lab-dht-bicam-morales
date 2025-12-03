@@ -1,15 +1,15 @@
-package main.java.es.ull.esit.app.metaheuristics.generators;
+package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.es.ull.esit.app.factory_method.FactoryGenerator;
+import es.ull.esit.app.factory_method.FactoryGenerator;
 
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
 
-import main.java.es.ull.esit.app.problem.definition.Problem.ProblemType;
-import main.java.es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.Problem.ProblemType;
+import es.ull.esit.app.problem.definition.State;
 
 public class MultiGenerator extends Generator {
 
@@ -60,7 +60,7 @@ public class MultiGenerator extends Generator {
 			}
 		}
 		createInstanceGeneratorsBPP();
-		Strategy.getStrategy().listStates = MultiGenerator.getListGeneratedPP();
+		Strategy.getStrategy().setListStates(MultiGenerator.getListGeneratedPP());
 		
 		FactoryGenerator ifFactoryGeneratorEE = new FactoryGenerator();
 		Generator generatorEE = ifFactoryGeneratorEE.createGenerator(GeneratorType.EvolutionStrategies);
@@ -116,11 +116,11 @@ public class MultiGenerator extends Generator {
 //			else i++;
 //		}
 		int j = 0;
-		while (j < EvolutionStrategies.countRef){
+		while (j < EvolutionStrategies.getCountRef()){
 			State stateCandidate;
 			try {
 				stateCandidate = generator.generate(1);
-				Strategy.getStrategy().getProblem().Evaluate(stateCandidate);
+				Strategy.getStrategy().getProblem().evaluate(stateCandidate);
 				//stateCandidate.setEvaluation(stateCandidate.getEvaluation());
 				
 				//stateCandidate = generator.generate(1);
@@ -166,11 +166,10 @@ public class MultiGenerator extends Generator {
 			ClassNotFoundException, InstantiationException,
 			IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException {
-		// TODO Auto-generated method stub
-		Strategy.getStrategy().generator = roulette();
-		activeGenerator = Strategy.getStrategy().generator;
+		Strategy.getStrategy().setGenerator(roulette());
+		activeGenerator = Strategy.getStrategy().getGenerator();
 		activeGenerator.countGender++;
-		State state = Strategy.getStrategy().generator.generate(1);
+		State state = Strategy.getStrategy().getGenerator().generate(1);
 		return state;
 	}
 
@@ -232,7 +231,7 @@ public class MultiGenerator extends Generator {
 	}
 	
 	public boolean searchState(State stateCandidate) {
-		if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.Maximizar)){
+		if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.MAXIMIZAR)){
 			if(stateCandidate.getEvaluation().get(0) > Strategy.getStrategy().getBestState().getEvaluation().get(0)){
 				if(stateCandidate.getEvaluation().get(0) > Strategy.getStrategy().getBestState().getEvaluation().get(0))
 					activeGenerator.countBetterGender++;
@@ -361,9 +360,15 @@ public class MultiGenerator extends Generator {
 		}
 	}
 	
-	public Object clone(){
-		return this;
-	}
+  // Copy constructor to duplicate a MultiGenerator instance
+  public MultiGenerator(MultiGenerator other){
+    super();
+    this.Generatortype = other.Generatortype;
+  }
+
+  public MultiGenerator copy() {
+    return new MultiGenerator(this);
+  }
 
 	@Override
 	public int[] getListCountBetterGender() {

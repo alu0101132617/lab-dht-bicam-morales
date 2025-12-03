@@ -1,38 +1,80 @@
-package main.java.es.ull.esit.app.metaheuristics.generators;
+package es.ull.esit.app.metaheuristics.generators;
 
-import main.java.es.ull.esit.app.factory_method.FactoryGenerator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import es.ull.esit.app.factory_method.FactoryGenerator;
 
+/**
+ * Runnable that creates a Genetic Algorithm (GA) generator
+ * in a separate thread and updates the MultiGenerator list.
+ */
 public class InstanceGA implements Runnable {
 
-	private boolean terminate = false;
-	
-	public void run() {
-		FactoryGenerator ifFactoryGenerator = new FactoryGenerator();
-		Generator generatorGA = null;
-		try {
-			generatorGA = ifFactoryGenerator.createGenerator(GeneratorType.GeneticAlgorithm);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		boolean find = false;
-		int i = 0;
-		while (find == false) {
-			if(MultiGenerator.getListGenerators()[i].getType().equals(GeneratorType.GeneticAlgorithm)){
-				MultiGenerator.getListGenerators()[i] = generatorGA;
-				find = true;
-			}
-			else i++;
-		}
-		terminate = true;
-	}
+  /** Logger for this class. */
+  private static final Logger LOGGER = Logger.getLogger(InstanceGA.class.getName());
 
-	public boolean isTerminate() {
-		return terminate;
-	}
+  /** Flag to indicate if the thread has finished its work. */
+  private volatile boolean terminate = false;
 
-	public void setTerminate(boolean terminate) {
-		this.terminate = terminate;
-	}
+  /**
+   * Creates a GeneticAlgorithm generator using FactoryGenerator and replaces
+   * the existing GA entry in MultiGenerator, if found.
+   */
+  @Override
+  public void run() {
+    FactoryGenerator factoryGenerator = new FactoryGenerator();
+    Generator generatorGA;
 
+    try {
+      generatorGA = factoryGenerator.createGenerator(GeneratorType.GeneticAlgorithm);
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE,
+          "Error creating GeneticAlgorithm generator in InstanceGA.", e);
+      terminate = true;
+      return;
+    }
+
+    if (generatorGA == null) {
+      LOGGER.severe("FactoryGenerator returned null for GeneticAlgorithm generator.");
+      terminate = true;
+      return;
+    }
+
+    Generator[] generators = MultiGenerator.getListGenerators();
+    if (generators == null) {
+      LOGGER.severe("MultiGenerator.getListGenerators() returned null in InstanceGA.");
+      terminate = true;
+      return;
+    }
+
+    for (int i = 0; i < generators.length; i++) {
+      Generator current = generators[i];
+      if (current != null
+          && GeneratorType.GeneticAlgorithm.equals(current.getType())) {
+        generators[i] = generatorGA;
+        break;
+      }
+    }
+
+    terminate = true;
+  }
+
+  /**
+   * Indicates whether this task has terminated.
+   *
+   * @return true if the task has finished; false otherwise.
+   */
+  public boolean isTerminate() {
+    return terminate;
+  }
+
+  /**
+   * Sets the termination flag. Intended mainly for testing.
+   *
+   * @param terminate true if the task should be marked as finished; false otherwise.
+   */
+  public void setTerminate(boolean terminate) {
+    this.terminate = terminate;
+  }
 }

@@ -33,11 +33,18 @@ Define las dependencias y plugins necesarios para:
 
     <!-- Plugin de cobertura JaCoCo -->
     <jacoco.version>0.8.10</jacoco.version>
-    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+
 
     <!-- Configuración de SonarQube local (SonarCloud luego en el perfil) -->
     <sonar.host.url>http://localhost:9000</sonar.host.url>
     <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+    <sonar.projectName>${project.name}</sonar.projectName>
+    <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
+
+     <!-- Informe de cobertura JaCoCo en XML para Sonar -->
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.build.directory}/jacoco-report/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
   </properties>
 
   <!-- Dependencias del proyecto -->
@@ -72,12 +79,39 @@ Define las dependencias y plugins necesarios para:
 
     <!-- JExcelAPI: manipulación de ficheros Excel (.xls) -->
     <!-- Fase: compile -->
+
+     <!-- jxl (Excel) SIN log4j 1.x -->
     <dependency>
       <groupId>net.sourceforge.jexcelapi</groupId>
       <artifactId>jxl</artifactId>
       <version>2.6.12</version>
+      <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
+    <!-- Log4j 2 -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.23.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.23.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>5.11.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <!-- Plugins de análisis, calidad, seguridad y pruebas -->
@@ -105,7 +139,7 @@ Define las dependencias y plugins necesarios para:
       </plugin>
 
       <!-- JaCoCo: cobertura de código -->
-      <!-- Fase: prepare-agent (antes de las pruebas) y test (después de las pruebas) -->
+      <!-- Fase: prepare-agent (instrumentación) + verify (informe) -->
       <!-- Ruta de los informes de cobertura: target/jacoco-report -->
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -124,19 +158,14 @@ Define las dependencias y plugins necesarios para:
           <!-- Generar informe (HTML y XML) después de las pruebas -->
           <execution>
             <id>report</id>
-            <phase>test</phase>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
             </goals>
             <configuration>
               <!-- Directorio de salida de los informes -->
               <outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
-              <!-- Generar informes en HTML y XML -->
-              <reports>
-                <report>html</report>
-                <report>xml</report>
-              </reports>
-
+              <!-- El goal 'report' genera HTML + XML por defecto -->
             </configuration>
           </execution>
         </executions>
@@ -144,87 +173,177 @@ Define las dependencias y plugins necesarios para:
 
       <!-- Checkstyle: estilo del código -->
       <!-- Fase: validate -->
-      <!-- Ruta del informe de estilo: target/checkstyle-result.xml -->
+      <!-- Ruta del informe XML: target/checkstyle-result.xml (por defecto) -->
+      <!-- Ejecución mínima dentro del ciclo de vida: [mvn validate] -->
+      <!-- Ejecucción manual: [mvn checkstyle:check] - falla el build si hay ciolaciones. -->
+      <!-- Ejecucción manual: [mvn checkstyle:checkstyle] - no detiene el build aunque haya violaciones. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.3.1</version>
-        <configuration>
-          <!-- Archivo de configuración -->
-          <configLocation>checkstyle.xml</configLocation>
-          <!-- Codificación de caracteres -->
-          <encoding>UTF-8</encoding>
-          <!-- Mostrar resultados en consola -->
-          <consoleOutput>true</consoleOutput>
-        </configuration>
-      </plugin>
+        <version>3.6.0</version>
 
-      <!-- PMD: análisis estático del código -->
-      <!-- Fase: verify -->
-      <!-- Ruta del informe de PMD: target/pmd.xml -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.21.2</version>
         <configuration>
-          <!-- Mostrar reglas que fallan en la consola -->
-          <printFailingRules>true</printFailingRules>
-          <!-- No fallar la build por violaciones -->
-          <failOnViolation>false</failOnViolation>
+          <!-- Archivo de reglas de Google Java Style -->
+          <configLocation>google_checks.xml</configLocation>
+          <!-- Codificación -->
+          <encoding>UTF-8</encoding>
+          <!-- Mostrar los warnings en la consola -->
+          <consoleOutput>false</consoleOutput>
+          <!-- Hace fallar el build si hay violaciones -->
+          <failsOnViolation>true</failsOnViolation>
+          <!-- Generar enlaces desde las violaciones reportadas en el informe al código fuente -->
+          <linkXRef>true</linkXRef>
         </configuration>
+
         <executions>
           <execution>
-            <phase>verify</phase>
+            <?m2e execute onConfiguration,onIncremental?>
+            <id>validate</id>
+            <phase>validate</phase>
             <goals>
               <goal>check</goal>
             </goals>
           </execution>
         </executions>
+
+      </plugin>
+
+      <!-- PMD: análisis estático del código -->
+      <!-- Fase: verify -->
+      <!-- Ejecución mínima dentro del ciclo de vida: [mvn verify] -->
+      <!-- Ejecución manual de PMD: [mvn pmd:check] o [mvn pmd:pmd] : la primera falla el build si hay violaciones -->
+      <!-- Ruta del informe XML de PMD: target/pmd.xml (por defecto) -->
+      <!-- Ejecución manual de CPD: [mvn pmd:cpd-check] o [mvn pmd:cpd] : la primera falla el build si hay duplicaciones -->
+      <!-- Ruta del informe XML de CPD: target/cpd.xml (por defecto) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.28.0</version>
+
+        <configuration>
+          <!-- Versión de Java para parsear -->
+          <source>17</source>
+          <!-- Codificación -->
+          <inputEncoding>UTF-8</inputEncoding>
+          <!-- Generar enlaces desde los errores reportados en el informe al código fuente -->
+          <linkXRef>true</linkXRef>
+          <!-- Mostrar reglas que fallan en la consola -->
+          <printFailingRules>false</printFailingRules>
+          <!-- Fallar el build si hay violaciones graves -->
+          <failOnViolation>false</failOnViolation>
+          <!-- Conjuntos de reglas (oficiales de PMD) -->
+          <rulesets>
+            <ruleset>category/java/bestpractices.xml</ruleset>
+            <ruleset>category/java/errorprone.xml</ruleset>
+            <ruleset>category/java/codestyle.xml</ruleset>
+            <ruleset>category/java/performance.xml</ruleset>
+          </rulesets>
+          <!-- Configuración de CPD -->
+          <minimumTokens>100</minimumTokens>
+
+        </configuration>
+
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>          <!-- Análisis PMD -->
+              <goal>cpd-check</goal>      <!-- Análisis de duplicación CPD -->
+            </goals>
+          </execution>
+        </executions>
+
       </plugin>
 
 
       <!-- SpotBugs + FindSecBugs: SAST y análisis de seguridad del código -->
       <!-- Fase: verify -->
-      <!-- Ruta del informe de SpotBugs: target/spotbugs/spotbugs.xml -->
+      <!-- Ruta del informe XML: target/spotbugs/spotbugsxml.xml -->
+      <!-- Ejecucción mínima dentro del ciclo de vida: [mvn verify] -->
+      <!-- Ejecución manual: [mvn spotbugs:check] ó [mvn spotbugs:spotbugs] : la primera falla el build si hay bugs -->
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.8.3.0</version>
+        <version>4.9.8.2</version>
+
+        <executions>
+          <execution>
+              <phase>verify</phase>
+              <goals>
+                  <goal>check</goal>
+              </goals>
+          </execution>
+        </executions>
+
         <configuration>
-          <!-- Análisis profundo -->
+          <!-- Máximo esfuerzo de análisis -->
           <effort>Max</effort>
-          <!-- Nivel mínimo de severidad de los bugs a reportar: Low, Medium, High -->
+          <!-- Nivel mínimo de severidad para reportar -->
           <threshold>Low</threshold>
-          <!-- Generar informe en XML -->
+
+          <!-- Fallar build si se encuentran bugs -->
+          <failOnError>false</failOnError>
+          
+          <!-- XML -->
           <xmlOutput>true</xmlOutput>
-          <!-- Directorio de salida del informe XML: target/spotbugs/spotbugs.xml -->
           <xmlOutputDirectory>${project.build.directory}/spotbugs</xmlOutputDirectory>
-          <!-- Directorio del código fuente -->
-          <sourceDirectories>
-            <directory>${project.basedir}/src/main/java</directory>
-          </sourceDirectories>
+          <spotbugsXmlOutputFilename>spotbugsXml.xml</spotbugsXmlOutputFilename>
+
+          <!-- HTML -->
+          <!-- <htmlOutput>true</htmlOutput>
+          <outputDirectory>${project.build.directory}/spotbugs</outputDirectory> -->
+          
         </configuration>
+        
         <dependencies>
-          <!-- Plugin FindSecBugs: análisis de seguridad del código -->
+          <!-- Versión de SpotBugs usada por el plugin 4.9.8.2 -->
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>4.9.8</version>
+          </dependency>
+
+          <!-- Plugin FindSecBugs: detectores de seguridad adicionales -->
           <dependency>
             <groupId>com.h3xstream.findsecbugs</groupId>
             <artifactId>findsecbugs-plugin</artifactId>
             <version>1.12.0</version>
           </dependency>
+
+          
         </dependencies>
+
       </plugin>
 
       <!-- OWASP Dependency-Check -->
       <!-- Fase: verify -->
-      <!-- Ruta del informe de OWASP Dependency-Check: target/dependency-check-report.xml -->
+      <!-- Ruta del informe HTML: target/dependency-check-report.html -->
+      <!-- Ruta del informe XML: target/dependency-check-report.xml -->
+      <!-- Ejecución mínima dentro del ciclo de vida: [mvn verify] -->
+      <!-- Ejecución manual: [mvn dependency-check:check] -->
       <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
-        <version>9.1.0</version>
+        <version>12.1.9</version>
+
         <configuration>
-          <!-- Fallar la build si se encuentran vulnerabilidades con CVSS mayor o igual a 10 -->
-          <failBuildOnCVSS>10</failBuildOnCVSS>
+          <!-- Generar informes en HTML y XML -->
+          <formats>
+            <format>XML</format>
+            <format>HTML</format>
+          </formats>
+          <!-- Fallar la build si se encuentra una vulnerabilidad con CVSS >= 7, con un grado crítico -->
+          <failBuildOnCVSS>7</failBuildOnCVSS>
         </configuration>
+
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+
       </plugin>
 
       <!-- SonarQube -->
@@ -237,6 +356,109 @@ Define las dependencias y plugins necesarios para:
 
     </plugins>
   </build>
+
+  <!-- Informes de calidad y análisis -->
+  <reporting>
+    <plugins>
+
+      <!-- Ingo general: genera páginas como: index, dependencies, team, scm, licenses, etc. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.9.0</version>
+      </plugin>
+
+
+      <!-- Surefire Report: resultados de pruebas unitarias -->
+      <!-- Ruta del informe HTML: target/site/surefire-report.html -->
+      <!-- [mvn site] -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+
+      <!-- JaCoCo: informe de cobertura integrado en la site -->
+      <!-- Ruta del informe HTML: target/site/jacoco/index.html -->
+      <!-- [mvn site] -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- Expone el goal "report" como informe de la site -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+    
+      <!-- Checkstyle: estilo del código -->
+      <!-- Ruta del informe HTML: target/site/checkstyle.html -->
+      <!-- [mvn site] -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>false</consoleOutput>
+        </configuration>
+      </plugin>
+
+      <!-- PMD: análisis estático del código -->
+      <!-- Ruta de los informes HTML: target/site/pmd.html -->
+      <!--                            target/site/cpd.html -->
+      <!-- [mvn site] -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.28.0</version>
+
+        <configuration>
+          <linkXref>true</linkXref>
+          <inputEncoding>UTF-8</inputEncoding>
+          <targetJdk>17</targetJdk>
+          <rulesets>
+            <ruleset>category/java/bestpractices.xml</ruleset>
+            <ruleset>category/java/errorprone.xml</ruleset>
+            <ruleset>category/java/codestyle.xml</ruleset>
+          </rulesets>
+        </configuration>
+
+      </plugin>
+
+      <!-- SpotBugs + FindSecBugs: SAST y análisis de seguridad del código -->
+      <!-- Ruta del informe HTML: target/site/spotbugs.html -->
+      <!-- [mvn site] -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.9.8.2</version>
+      </plugin>
+
+      <!-- OWASP Dependency-Check : análisis de vulnerabilidades en dependencias -->
+      <!-- Ruta del informe HTML: target/site/dependency-check-report.html -->
+      <!-- [mvn site] -->
+      <plugin>
+      <groupId>org.owasp</groupId>
+      <artifactId>dependency-check-maven</artifactId>
+      <version>12.1.9</version>
+      <reportSets>
+        <reportSet>
+          <reports>
+            <report>aggregate</report>
+          </reports>
+        </reportSet>
+      </reportSets>
+    </plugin>
+
+    </plugins>
+  </reporting>
 
   <!-- Perfil para SonarCloud / SonarQube (ejecutar con -Psonar) -->
   <profiles>

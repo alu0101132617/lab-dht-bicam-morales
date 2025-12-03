@@ -1,38 +1,47 @@
-package main.java.es.ull.esit.app.local_search.complement;
+package es.ull.esit.app.local_search.complement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.State;
 
+/**
+ * Class that manages the tabu list for Tabu Search in local search algorithms.
+ */
 public class TabuSolutions {
-	
-	public static List<State> listTabu = new ArrayList<State>();
 
-	public static int maxelements; 
+  /** List of tabu states (accesible desde otros paquetes como MultiobjectiveTabuSearch y TabuSearch). */
+  public static final List<State> listTabu = new ArrayList<>();
 
-	public List<State> filterNeighborhood(List<State> listNeighborhood) throws Exception {
-		List<State> listFiltrate = new ArrayList<State>();
-		//List<ProblemState> auxList = new ArrayList<ProblemState>();
-		//auxList = listNeighborhood;
-		//Problem problem = new Problem();
-		if (!listTabu.isEmpty()) {
-			for (int i = listNeighborhood.size() - 1; i >= 0 ; i--) {
-				int count_tabu = 0; 
-				while (listTabu.size() > count_tabu) {
-					if (listNeighborhood.get(i).equals(listTabu.get(count_tabu))) {
-						listNeighborhood.remove(i);
-					}
-					count_tabu++;
-				}
-			}
-			listFiltrate = listNeighborhood;
-			if (listFiltrate.isEmpty()) {
-				throw new Exception();
-			}
-		} else {
-			listFiltrate = listNeighborhood;
-		}
-		return listFiltrate;
-	}
+  /** Maximum number of elements allowed in the tabu list (nombre esperado: maxelements). */
+  public static int maxelements = 100;
+
+  /**
+   * Filters the neighborhood states by removing those present in the tabu list.
+   * @param listNeighborhood [List<State>] List of neighborhood states.
+   * @return [List<State>] Filtered list of neighborhood states.
+   */
+  public List<State> filterNeighborhood(List<State> listNeighborhood) {
+    List<State> listFiltrate;
+
+    if (!listTabu.isEmpty()) {
+      for (int i = listNeighborhood.size() - 1; i >= 0; i--) {
+        int countTabu = 0;
+        while (listTabu.size() > countTabu) {
+          if (listNeighborhood.get(i).equals(listTabu.get(countTabu))) {
+            listNeighborhood.remove(i);
+            break; // ya hemos eliminado este índice, salimos del while
+          }
+          countTabu++;
+        }
+      }
+      listFiltrate = listNeighborhood;
+      if (listFiltrate.isEmpty()) {
+        throw new IllegalArgumentException("All neighborhood states are in the tabu list.");
+      }
+    } else {
+      listFiltrate = listNeighborhood;
+    }
+    return listFiltrate;
+  }
 }

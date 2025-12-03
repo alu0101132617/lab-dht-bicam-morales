@@ -1,5 +1,8 @@
-package main.java.es.ull.esit.app.evolutionary_algorithms.complement;
+package es.ull.esit.app.evolutionary_algorithms.complement;
 
+/**
+ * Enum defining the types of sampling methods available for selecting individuals in an evolutionary algorithm.
+ */
 public enum SamplingType {
-    ProbabilisticSampling;
+  PROBABILISTIC_SAMPLING;  /** Probabilistic sampling method */
 }

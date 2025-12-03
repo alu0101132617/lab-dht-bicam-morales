@@ -1,10 +1,11 @@
+
+package es.ull.esit.app.local_search.complement;
+
 /**
- * @(#) Strategy.java
+ * Enumeration representing different strategy types for local search algorithms.
  */
-
-package main.java.es.ull.esit.app.local_search.complement;
-
 public enum StrategyType
 {
-	TABU, NORMAL;	
+	TABU,     /** Tabu Search strategy */
+  NORMAL;   /** Normal Search strategy */
 }

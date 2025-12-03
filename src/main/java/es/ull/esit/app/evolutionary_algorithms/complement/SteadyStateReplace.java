@@ -1,53 +1,46 @@
-package main.java.es.ull.esit.app.evolutionary_algorithms.complement;
+package es.ull.esit.app.evolutionary_algorithms.complement;
 
 import java.util.List;
 
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
-import main.java.es.ull.esit.app.problem.definition.State;
-import main.java.es.ull.esit.app.problem.definition.Problem.ProblemType;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.Problem.ProblemType;
 
-
+/**
+ * Class that implements the steady state replacement method.
+ */
 public class SteadyStateReplace extends Replace {
 
+  /**
+   * Replaces a state in the population using the steady state replacement method.
+   * @param stateCandidate [State] The candidate state to be considered for replacement.
+   * @param listState [List<State>] The current population of states.
+   * @return [List<State>] The updated population of states after replacement.
+   */
 	@Override
 	public List<State> replace(State stateCandidate, List<State> listState) {
-		State stateREP = null;
-		if (Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.Maximizar)) {
-			stateREP = MinValue(listState);
-			if(stateCandidate.getEvaluation().get(0) >= stateREP.getEvaluation().get(0)){
-				Boolean find = false;
-		        int count = 0;
-		        while ((find.equals(false)) && (listState.size() > count)){
-		        	if(listState.get(count).equals(stateREP)){
-		        		listState.remove(count);
-						listState.add(count, stateCandidate);
-						find = true;
-					}
-		        	else count ++;
-				}
-			}
-		}
-		else {
-			if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.Minimizar)){
-				stateREP = MaxValue(listState);
-				if(stateCandidate.getEvaluation().get(0) <= stateREP.getEvaluation().get(0)){
-					Boolean find = false;
-			        int count = 0;
-			        while ((find.equals(false)) && (listState.size() > count)){
-			        	if(listState.get(count).equals(stateREP)){
-			        		listState.remove(count);
-							listState.add(count, stateCandidate);
-							find = true;
-						}
-			        	else count ++;
-					}
-				}
+		ProblemType type = Strategy.getStrategy().getProblem().getTypeProblem();
+		State stateREP = type.equals(ProblemType.MAXIMIZAR) ? minValue(listState) : maxValue(listState);
+		
+		double candidateEval = stateCandidate.getEvaluation().get(0);
+		double repEval = stateREP.getEvaluation().get(0);
+		boolean shouldReplace = type.equals(ProblemType.MAXIMIZAR) ? (candidateEval >= repEval) : (candidateEval <= repEval);
+		
+		if (shouldReplace) {
+			int index = listState.indexOf(stateREP);
+			if (index >= 0) {
+				listState.set(index, stateCandidate);
 			}
 		}
 		return listState;
 	}
 	
-	public State MinValue (List<State> listState){
+  /**
+   * Finds the state with the minimum evaluation value in a list of states.
+   * @param listState [List<State>] The list of states to search.
+   * @return [State] The state with the minimum evaluation value.
+   */
+	public State minValue (List<State> listState){
 		State value = listState.get(0);
 		double min = listState.get(0).getEvaluation().get(0);
 		for (int i = 1; i < listState.size(); i++) {
@@ -58,8 +51,13 @@ public class SteadyStateReplace extends Replace {
 		}
 		return value;
 	}
-	
-	public State MaxValue (List<State> listState){
+  
+  /**
+   * Finds the state with the maximum evaluation value in a list of states.
+   * @param listState [List<State>] The list of states to search.
+   * @return [State] The state with the maximum evaluation value.
+   */
+	public State maxValue (List<State> listState){
 		State value = listState.get(0);
 		double max = listState.get(0).getEvaluation().get(0);
 		for (int i = 1; i < listState.size(); i++) {

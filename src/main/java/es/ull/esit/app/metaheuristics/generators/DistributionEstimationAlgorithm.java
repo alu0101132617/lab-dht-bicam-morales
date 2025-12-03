@@ -1,288 +1,425 @@
-package main.java.es.ull.esit.app.metaheuristics.generators;
+package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
 
-import main.java.es.ull.esit.app.problem.definition.State;
-import main.java.es.ull.esit.app.problem.definition.Problem.ProblemType;
+import es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.Problem.ProblemType;
 
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.DistributionType;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.FatherSelection;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.Replace;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.ReplaceType;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.Sampling;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.SamplingType;
-import main.java.es.ull.esit.app.evolutionary_algorithms.complement.SelectionType;
-import main.java.es.ull.esit.app.factory_interface.IFFSampling;
-import main.java.es.ull.esit.app.factory_interface.IFFactoryFatherSelection;
-import main.java.es.ull.esit.app.factory_interface.IFFactoryReplace;
-import main.java.es.ull.esit.app.factory_method.FactoryFatherSelection;
-import main.java.es.ull.esit.app.factory_method.FactoryReplace;
-import main.java.es.ull.esit.app.factory_method.FactorySampling;
+import es.ull.esit.app.evolutionary_algorithms.complement.DistributionType;
+import es.ull.esit.app.evolutionary_algorithms.complement.FatherSelection;
+import es.ull.esit.app.evolutionary_algorithms.complement.Replace;
+import es.ull.esit.app.evolutionary_algorithms.complement.ReplaceType;
+import es.ull.esit.app.evolutionary_algorithms.complement.Sampling;
+import es.ull.esit.app.evolutionary_algorithms.complement.SamplingType;
+import es.ull.esit.app.evolutionary_algorithms.complement.SelectionType;
+import es.ull.esit.app.factory_interface.IFFSampling;
+import es.ull.esit.app.factory_interface.IFFactoryFatherSelection;
+import es.ull.esit.app.factory_interface.IFFactoryReplace;
+import es.ull.esit.app.factory_method.FactoryFatherSelection;
+import es.ull.esit.app.factory_method.FactoryReplace;
+import es.ull.esit.app.factory_method.FactorySampling;
 
+/**
+ * Class that implements the Distribution Estimation Algorithm (DEA) generator.
+ */
 public class DistributionEstimationAlgorithm extends Generator {
 
-	private State stateReferenceDA;
-	private List<State> referenceList = new ArrayList<State>(); 
-	public static List<State> sonList = new ArrayList<State>(); 
-	private IFFactoryFatherSelection iffatherselection;
-	private IFFSampling iffsampling;
-	private IFFactoryReplace iffreplace;
-	private DistributionType distributionType;
-	private SamplingType Samplingtype;
-	
-//	private ReplaceType replaceType;
-	public static ReplaceType replaceType;
-	public static SelectionType selectionType;
-	
-	private GeneratorType generatorType;
-	//private ProblemState candidate;
-	public static int truncation;
-	public static int countRef = 0;
-	private float weight;
-	
-	//problemas dinamicos
-	public static int countGender = 0;
-	public static int countBetterGender = 0;
-	private int[] listCountBetterGender = new int[10];
-	private int[] listCountGender = new int[10];
-	private float[] listTrace = new float[1200000];
-	
-	
-	public DistributionEstimationAlgorithm() {
-		super();
-		this.referenceList = getListStateRef(); // llamada al m�todo que devuelve la lista. 
-//		this.selectionType = SelectionType.Truncation;
-		//this.replaceType = ReplaceType.Generational;
-//		this.replaceType = ReplaceType.Smallest;
-		this.generatorType = GeneratorType.DistributionEstimationAlgorithm;
-		this.distributionType = DistributionType.Univariate;
-		this.Samplingtype = SamplingType.ProbabilisticSampling;
-		this.weight = 50;
-		listTrace[0] = weight;
-		listCountBetterGender[0] = 0;
-		listCountGender[0] = 0;
-	}
-	
-	public State MaxValue (List<State> listInd){
-		State state = new State(listInd.get(0));
-		double max = state.getEvaluation().get(0);
-		for (int i = 1; i < listInd.size(); i++) {
-			if(listInd.get(i).getEvaluation().get(0) > max){
-				max = listInd.get(i).getEvaluation().get(0);
-				state = new State(listInd.get(i));
-			}
-		}
-		return state;
-	}
-	
-	@Override
-	public State generate(Integer operatornumber) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException,	NoSuchMethodException {
-		//********************selection*****************************
-		//ProblemState candidate = new ProblemState();
-		/*State candidate = new State();//(State) Strategy.getStrategy().getProblem().getState().clone()
-		List<State> fathers = new ArrayList<State>();
-		fathers = getfathersList();
-		//**************************distribution***********************************
-		iffdistribution = new FactoryDistribution();
-    	Distribution distribution = iffdistribution.createDistribution(distributionType);
-    	List<Probability> probability = distribution.distribution(fathers);
-		
-    	//***************************muestreo*****************************************
-    	iffsampling = new FactorySampling();
-    	Sampling samplingG = iffsampling.createSampling(Samplingtype);
-    	List<State> ind = samplingG.sampling(probability, referenceList.size());
-    	sonList = ind;
-    	candidate = MaxValue(ind);
-       // this.candidate = candidate;
-    	return candidate;*/	
-    	
-    	//***************************version 1.0
-    	//ArrayList<State> listcandidate = new ArrayList<State>();//(State) Strategy.getStrategy().getProblem().getState().clone()
-		
-    	List<State> fathers = new ArrayList<State>();
-		fathers = getfathersList();
-		iffsampling = new FactorySampling();
-    	Sampling samplingG = iffsampling.createSampling(Samplingtype);
-    	List<State> ind = samplingG.sampling(fathers, operatornumber);
-    	State candidate = null;
-    	if(ind.size() > 1){
-    		for (int i = 0; i < ind.size(); i++) {
-    			double evaluation = Strategy.getStrategy().getProblem().getFunction().get(0).Evaluation(ind.get(i));
-    			ArrayList<Double> listEval = new ArrayList<Double>();
-    			listEval.add(evaluation);
-    			ind.get(0).setEvaluation(listEval);
-    		}
-    		candidate = MaxValue(ind);
-    	}
-    	else{
-    		candidate = ind.get(0);
-    	}
-//    	sonList = ind;
-    	//listcandidate.add(candidate);
-       // this.candidate = candidate;
-    	return candidate;
-    	
+  /** State reference for the DEA. */
+  private State stateReferenceDA;
+  /** List of reference states for the DEA. */
+  private List<State> referenceList = new ArrayList<>();
+  /** List of son states generated by the DEA. */
+  private static List<State> sonList = new ArrayList<>();
+  /** Type of distribution used in the DEA. */
+  private DistributionType distributionType;
+  /** Type of sampling used in the DEA. */
+  private SamplingType samplingType;
+
+  /** Type of replacement strategy used in the DEA. */
+  private static ReplaceType replaceType;
+  /** Type of selection strategy used in the DEA. */
+  private static SelectionType selectionType;
+
+  /** Type of generator. */
+  private GeneratorType generatorType;
+  /** Truncation size for father selection. */
+  private static int truncation;
+  /** Weight parameter for the DEA. */
+  private float weight;
+
+  /** Counter for reference states. */
+  private static int countRef = 0;
+
+  /** List of counts for better gender evaluations. */
+  private int[] listCountBetterGenderDistribution = new int[10];
+  /** List of counts for gender evaluations. */
+  private int[] listCountGender = new int[10];
+  /** Trace list for recording weight changes. */
+  private float[] listTrace = new float[1200000];
+
+  /**
+   * Constructor method.
+   */
+  public DistributionEstimationAlgorithm() {
+    super();
+    // Aseguramos que las estructuras internas están inicializadas
+    this.referenceList = getListStateRef();
+    this.generatorType = GeneratorType.DistributionEstimationAlgorithm;
+    this.distributionType = DistributionType.UNIVARIATE;
+    this.samplingType = SamplingType.PROBABILISTIC_SAMPLING;
+    this.weight = 50.0f;
+
+    // Por claridad re-inicializamos los arrays (aunque ya tienen new en la declaración)
+    this.listCountBetterGenderDistribution = new int[10];
+    this.listCountGender = new int[10];
+    this.listTrace = new float[1200000];
+
+    // Valores iniciales
+    this.listTrace[0] = this.weight;
+    this.listCountBetterGenderDistribution[0] = 0;
+    this.listCountGender[0] = 0;
+  }
+
+  /**
+   * Calculates the individual with the maximum evaluation from a list of
+   * individuals.
+   * 
+   * @param listInd [List<State>] List of individuals.
+   * @return [State] Individual with the maximum evaluation.
+   */
+  public State maxValue(List<State> listInd) {
+    State state = new State(listInd.get(0));
+    double max = state.getEvaluation().get(0);
+    for (int i = 1; i < listInd.size(); i++) {
+      if (listInd.get(i).getEvaluation().get(0) > max) {
+        max = listInd.get(i).getEvaluation().get(0);
+        state = new State(listInd.get(i));
+      }
     }
-    		
-	@Override
-	public State getReference() {
-		stateReferenceDA = referenceList.get(0);
-		if(Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.Maximizar)){
-			for (int i = 1; i < referenceList.size(); i++) {
-				if(stateReferenceDA.getEvaluation().get(0) < referenceList.get(i).getEvaluation().get(0))
-					stateReferenceDA = referenceList.get(i);
-			}
-		}
-		else{
-			for (int i = 1; i < referenceList.size(); i++) {
-				if(stateReferenceDA.getEvaluation().get(0) > referenceList.get(i).getEvaluation().get(0))
-					stateReferenceDA = referenceList.get(i);
-			}
-		}
-		return stateReferenceDA;
-	}
+    return state;
+  }
 
-	@Override
-	public List<State> getReferenceList() {
-		List<State> ReferenceList = new ArrayList<State>();
-		for (int i = 0; i < referenceList.size(); i++) {
-			State value = referenceList.get(i);
-			ReferenceList.add( value);
-		}
-		return ReferenceList;
-	}
+  /**
+   * Generates a new individual using the Distribution Estimation Algorithm (DEA).
+   * 
+   * @param operatornumber [Integer] Number of operators.
+   * @return [State] Generated individual.
+   * @throws IllegalArgumentException  If an illegal argument is provided.
+   * @throws SecurityException         If a security violation occurs.
+   * @throws ClassNotFoundException    If a class is not found.
+   * @throws InstantiationException    If an instantiation error occurs.
+   * @throws IllegalAccessException    If illegal access occurs.
+   * @throws InvocationTargetException If an invocation target error occurs.
+   * @throws NoSuchMethodException     If a method is not found.
+   */
+  @Override
+  public State generate(Integer operatornumber)
+      throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException,
+      IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
-	@Override
-	public GeneratorType getType() {
-		return this.generatorType;
-	}
+    List<State> fathers;
+    fathers = getfathersList();
+    IFFSampling iffsampling = new FactorySampling();
+    Sampling samplingG = iffsampling.createSampling(samplingType);
+    List<State> ind = samplingG.sampling(fathers, operatornumber);
+    State candidate = null;
+    if (ind.size() > 1) {
+      for (int i = 0; i < ind.size(); i++) {
+        double evaluation = Strategy.getStrategy().getProblem().getFunction().get(0).evaluation(ind.get(i));
+        ArrayList<Double> listEval = new ArrayList<>();
+        listEval.add(evaluation);
+        ind.get(0).setEvaluation(listEval);
+      }
+      candidate = maxValue(ind);
+    } else {
+      candidate = ind.get(0);
+    }
+    return candidate;
 
-	@Override
-	public void setInitialReference(State stateInitialRef) {
-		this.stateReferenceDA = stateInitialRef;
-	}
+  }
 
-	@Override
-	public void updateReference(State stateCandidate, Integer countIterationsCurrent) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException,	NoSuchMethodException {
-		iffreplace = new FactoryReplace();
-		Replace replace = iffreplace.createReplace(replaceType);
-		referenceList = replace.replace(stateCandidate, referenceList);
-	}
-	
-	public List<State> getListStateRef(){
-		Boolean found = false;
-		List<String> key = Strategy.getStrategy().getListKey();
-		int count = 0;
-		//if(Strategy.getStrategy().Statistics.getAllStates().size() == 0){
-		/*if(RandomSearch.listStateReference.size() == 0){
-			return this.referenceList = new ArrayList<State>();
-		}*/
-		while((found.equals(false)) && (Strategy.getStrategy().mapGenerators.size() > count)){
-			if(key.get(count).equals(GeneratorType.DistributionEstimationAlgorithm.toString())){
-				GeneratorType keyGenerator = GeneratorType.valueOf(String.valueOf(key.get(count)));
-				DistributionEstimationAlgorithm generator = (DistributionEstimationAlgorithm)Strategy.getStrategy().mapGenerators.get(keyGenerator);
-				if(generator.getListReference().isEmpty()){
-					referenceList.addAll(RandomSearch.listStateReference);
-					//for (int j = 1; j < Strategy.getStrategy().Statistics.getAllStates().size(); j++) {
-//					for (int j = 1; j < RandomSearch.listStateReference.size(); j++) {
-//						//if((Strategy.getStrategy().Statistics.getAllStates().get(j).getTypeGenerator().equals(GeneratorType.RandomSearch)) && (referenceList.size()!= countRef)){
-//						if(referenceList.size() != countRef){
-//							//State problemState = Strategy.getStrategy().Statistics.getAllStates().get(j);
-//							referenceList.add(RandomSearch.listStateReference.get(j));
-//						}
-//					}  
-				}
-				else{
-					referenceList = generator.getListReference();
-				}
-			    found = true;
-			}
-			count++;
-		}
-		return referenceList;
-	}
+  /**
+   * Gets the reference state for the DEA.
+   * @return [State] Reference state.
+   */
+  @Override
+  public State getReference() {
+    stateReferenceDA = referenceList.get(0);
+    if (Strategy.getStrategy().getProblem().getTypeProblem().equals(ProblemType.MAXIMIZAR)) {
+      for (int i = 1; i < referenceList.size(); i++) {
+        if (stateReferenceDA.getEvaluation().get(0) < referenceList.get(i).getEvaluation().get(0))
+          stateReferenceDA = referenceList.get(i);
+      }
+    } else {
+      for (int i = 1; i < referenceList.size(); i++) {
+        if (stateReferenceDA.getEvaluation().get(0) > referenceList.get(i).getEvaluation().get(0))
+          stateReferenceDA = referenceList.get(i);
+      }
+    }
+    return stateReferenceDA;
+  }
 
-	public List<State> getListReference() {
-		return referenceList;
-	}
+  /**
+   * Gets the list of reference states for the DEA.
+   * @return [List<State>] List of reference states.
+   */
+  @Override
+  public List<State> getReferenceList() {
+    List<State> refeList = new ArrayList<>();
+    for (int i = 0; i < referenceList.size(); i++) {
+      State value = referenceList.get(i);
+      refeList.add(value);
+    }
+    return refeList;
+  }
 
-	public void setListReference(List<State> listReference) {
-		referenceList = listReference;
-	}
+  /***
+   * Gets the type of generator.
+   * @return [GeneratorType] Type of generator.
+   */
+  @Override
+  public GeneratorType getType() {
+    return this.generatorType;
+  }
 
-	public GeneratorType getGeneratorType() {
-		return generatorType;
-	}
+  /**
+   * Sets the initial reference state for the DEA.
+   * @param stateInitialRef [State] Initial reference state.
+   */
+  @Override
+  public void setInitialReference(State stateInitialRef) {
+    this.stateReferenceDA = stateInitialRef;
+  }
 
-	public void setGeneratorType(GeneratorType generatorType) {
-		this.generatorType = generatorType;
-	}
+  /**
+   * Updates the reference list with a new candidate state.
+   * @param stateCandidate [State] Candidate state to update the reference list.
+   * @param countIterationsCurrent [Integer] Current iteration count.
+   */
+  @Override
+  public void updateReference(State stateCandidate, Integer countIterationsCurrent)
+      throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException,
+      IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    IFFactoryReplace iffreplace = new FactoryReplace();
+    Replace replace = iffreplace.createReplace(replaceType);
+    referenceList = replace.replace(stateCandidate, referenceList);
+  }
 
-	public List<State> getfathersList() throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		List<State> refList = new ArrayList<State>(this.referenceList); 
-    	iffatherselection = new FactoryFatherSelection();
-    	FatherSelection selection = iffatherselection.createSelectFather(selectionType);
-    	List<State> fathers = selection.selection(refList, truncation);
-    	return fathers;
-	}
+  /**
+   * Gets the list of reference states for the DEA.
+   * @return [List<State>] List of reference states.
+   */
+  public List<State> getListStateRef() {
+    Boolean found = false;
+    List<String> key = Strategy.getStrategy().getListKey();
+    int count = 0;
 
-	@Override
-	public List<State> getSonList() {
-		return sonList;
-	}
+    while ((found.equals(false)) && (Strategy.getStrategy().getMapGenerators().size() > count)) {
+      if (key.get(count).equals(GeneratorType.DistributionEstimationAlgorithm.toString())) {
+        GeneratorType keyGenerator = GeneratorType.valueOf(String.valueOf(key.get(count)));
+        DistributionEstimationAlgorithm generator = (DistributionEstimationAlgorithm) Strategy.getStrategy()
+            .getMapGenerators().get(keyGenerator);
+        if (generator.getListReference().isEmpty()) {
+          referenceList.addAll(RandomSearch.getListStateReference());
 
-	public boolean awardUpdateREF(State stateCandidate) {
-		boolean find = false;
-		int i = 0;
-		while (find == false && i < this.referenceList.size()) {
-			if(stateCandidate.equals(this.referenceList.get(i)))
-				find = true;
-			else i++;
-		}
-		return find;
-	}
+        } else {
+          referenceList = generator.getListReference();
+        }
+        found = true;
+      }
+      count++;
+    }
+    return referenceList;
+  }
 
-	@Override
-	public float getWeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+  /**
+   * Gets the list of reference states.
+   * @return [List<State>] List of reference states.
+   */
+  public List<State> getListReference() {
+    return referenceList;
+  }
 
-	@Override
-	public void setWeight(float weight) {
-		// TODO Auto-generated method stub
-		
-	}
+  /**
+   * Sets the list of reference states.
+   * @param listReference [List<State>] List of reference states.
+   */
+  public void setListReference(List<State> listReference) {
+    referenceList = listReference;
+  }
 
-	public DistributionType getDistributionType() {
-		return distributionType;
-	}
+  /**
+   * Gets the type of generator.
+   * @return [GeneratorType] Type of generator.
+   */
+  public GeneratorType getGeneratorType() {
+    return generatorType;
+  }
 
-	public void setDistributionType(DistributionType distributionType) {
-		this.distributionType = distributionType;
-	}
+  /**
+   * Sets the type of generator.
+   * @param generatorType [GeneratorType] Type of generator.
+   */
+  public void setGeneratorType(GeneratorType generatorType) {
+    this.generatorType = generatorType;
+  }
 
-	@Override
-	public int[] getListCountBetterGender() {
-		// TODO Auto-generated method stub
-		return this.listCountBetterGender;
-	}
+  /**
+   * Gets the list of father states selected for generating new individuals.
+   * @return [List<State>] List of father states.
+   * @throws IllegalArgumentException If an illegal argument is provided.
+   * @throws SecurityException        If a security violation occurs.
+   * @throws ClassNotFoundException   If a class is not found.
+   * @throws InstantiationException   If an instantiation error occurs.
+   * @throws IllegalAccessException   If an illegal access error occurs.
+   * @throws InvocationTargetException If an invocation target error occurs.
+   * @throws NoSuchMethodException     If a method is not found.
+   */
+  public List<State> getfathersList() throws IllegalArgumentException, SecurityException, ClassNotFoundException,
+      InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    List<State> refList = new ArrayList<>(this.referenceList);
+    IFFactoryFatherSelection iffatherselection = new FactoryFatherSelection();
+    FatherSelection selection = iffatherselection.createSelectFather(selectionType);
+    return selection.selection(refList, truncation);
+  }
 
-	@Override
-	public int[] getListCountGender() {
-		// TODO Auto-generated method stub
-		return this.listCountGender;
-	}
+  /**
+   * Gets the list of son states generated by the DEA.
+   * @return [List<State>] List of son states.
+   */
+  @Override
+  public List<State> getSonList() {
+    return sonList;
+  }
 
-	@Override
-	public float[] getTrace() {
-		// TODO Auto-generated method stub
-		return this.listTrace;
-	}
+  /**
+   * Awards an update to the reference list if the candidate state is already present.
+   * @param stateCandidate [State] Candidate state to check.
+   * @return [boolean] True if the candidate state is found in the reference list, false otherwise.
+   */
+  public boolean awardUpdateREF(State stateCandidate) {
+    boolean find = false;
+    int i = 0;
+    while (!find && i < this.referenceList.size()) {
+      if (stateCandidate.equals(this.referenceList.get(i)))
+        find = true;
+      else
+        i++;
+    }
+    return find;
+  }
+  
+  /**
+   * Gets the weight of the distribution estimation algorithm.
+   * @return [float] Weight of the distribution estimation algorithm.
+   */
+  @Override
+  public float getWeight() {
+    return this.weight;
+  }
+
+  /**
+   * Sets the weight of the distribution estimation algorithm.
+   * @param weight [float] Weight of the distribution estimation algorithm.
+   */
+  @Override
+  public void setWeight(float weight) {
+    this.weight = weight;
+  }
+
+  /**
+   * Gets the distribution type used in the DEA.
+   * @return [DistributionType] Distribution type used in the DEA.
+   */
+  public DistributionType getDistributionType() {
+    return distributionType;
+  }
+
+  /**
+   * Sets the distribution type used in the DEA.
+   * @param distributionType [DistributionType] Distribution type used in the DEA.
+   */
+  public void setDistributionType(DistributionType distributionType) {
+    this.distributionType = distributionType;
+  }
+
+  /**
+   * Gets the sampling type used in the DEA.
+   * @return [SamplingType] Sampling type used in the DEA.
+   */
+  @Override
+  public int[] getListCountBetterGender() {
+    return this.listCountBetterGenderDistribution;
+  }
+
+  /**
+   * Gets the list of gender counts.
+   * @return [int[]] List of gender counts.
+   */
+  @Override
+  public int[] getListCountGender() {
+    return this.listCountGender;
+  }
+
+  /**
+   * Gets the trace of weight changes.
+   * @return [float[]] Trace of weight changes.
+   */
+  @Override
+  public float[] getTrace() {
+    return this.listTrace;
+  }
+
+  /**
+   * Gets the replacement type used in the DEA.
+   * @return [ReplaceType] Replacement type used in the DEA.
+   */
+  public ReplaceType getReplaceType() {
+    return replaceType;
+  }
+
+  /**
+   * Sets the replacement type used in the DEA.
+   * @param replaceType [ReplaceType] Replacement type used in the DEA.
+   */
+  public static void setReplaceType(ReplaceType replaceType) {
+    DistributionEstimationAlgorithm.replaceType = replaceType;
+  }
+
+  /**
+   * Gets the selection type used in the DEA.
+   * @return [SelectionType] Selection type used in the DEA.
+   */
+  public SelectionType getSelectionType() {
+    return selectionType;
+  }
+
+  /**
+   * Sets the selection type used in the DEA.
+   * @param selectionType [SelectionType] Selection type used in the DEA.
+   */
+  public static void setSelectionType(SelectionType selectionType) {
+    DistributionEstimationAlgorithm.selectionType = selectionType;
+  }
+
+  /**
+   * Gets the counter for reference states.
+   * @return [int] Counter for reference states.
+   */
+  public static int getCountRef() {
+    return countRef;
+  }
 
 
+  /**
+   * Sets the counter for reference states.
+   * @param countRef [int] Counter for reference states.
+   */
+  public static void setCountRef(int countRef) {
+    DistributionEstimationAlgorithm.countRef = countRef;
+  }
 }

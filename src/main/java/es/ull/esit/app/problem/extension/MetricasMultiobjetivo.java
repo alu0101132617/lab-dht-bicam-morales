@@ -1,33 +1,49 @@
-package main.java.es.ull.esit.app.problem.extension;
+package es.ull.esit.app.problem.extension;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import jxl.read.biff.BiffException;
-import main.java.es.ull.esit.app.problem.definition.State;
+import es.ull.esit.app.problem.definition.State;
 
+/**
+ * Class that implements multi-objective metrics.
+ */
 public class MetricasMultiobjetivo {
 
-// % de soluciones q no son miembros del frente de pareto verdadero
-	public double TasaError(List<State> solutionsFPcurrent, List<State> solutionsFPtrue) throws BiffException, IOException{
+
+  /**
+   * Calculates the error rate between current and true Pareto front solutions.
+   * 
+   * @param solutionsFPcurrent [List<State>] Current Pareto front solutions.
+   * @param solutionsFPtrue [List<State>] True Pareto front solutions.
+   * @return [double] Error rate.
+   * @throws BiffException If an error occurs while reading the Excel file.
+   * @throws IOException If an I/O error occurs.
+   */
+	public double calcularTasaError(List<State> solutionsFPcurrent, List<State> solutionsFPtrue) throws BiffException, IOException{
 		float tasaError = 0;
-		for (int i = 0; i < solutionsFPcurrent.size() ; i++) { // frente de pareto actual
+		for (int i = 0; i < solutionsFPcurrent.size() ; i++) { 
 			State solutionVO = solutionsFPcurrent.get(i);
-			if(!Contains(solutionVO, solutionsFPtrue)){ // no esta en el frente de pareto verdadero 
+			if(!contains(solutionVO, solutionsFPtrue)){ 
 				tasaError++;
 			}
 		}
-		double total = tasaError/solutionsFPcurrent.size();
-		//System.out.println(solutionsFP.size() + "/" + solutions.size() + "/" + total);
-		return total;
+    return tasaError/solutionsFPcurrent.size();
+
 	}
 	
-// % Indica  qu�  tan  lejos  est�n  los  elementos  del frente  de  Pareto  actual  respecto  al  frente  de  Pareto  verdadero	
-	public double DistanciaGeneracional(List<State> solutionsFPcurrent, List<State> solutionsFPtrue) throws BiffException, IOException{
-		float min = 1000;
+  /**
+   * Calculates the generational distance between current and true Pareto front solutions.
+   * @param solutionsFPcurrent [List<State>] Current Pareto front solutions.
+   * @param solutionsFPtrue [List<State>] True Pareto front solutions.
+   * @return [double] Generational distance.
+   * @throws BiffException If an error occurs while reading the Excel file.
+   * @throws IOException If an I/O error occurs.
+   */
+	public double calcularDistanciaGeneracional(List<State> solutionsFPcurrent, List<State> solutionsFPtrue) throws BiffException, IOException{
+		float min;
 		float distancia = 0;
 		float distanciaGeneracional = 0;
 		for (int i = 0; i < solutionsFPcurrent.size();i++) {
@@ -47,21 +63,26 @@ public class MetricasMultiobjetivo {
 			}
 			distanciaGeneracional += min;
 		}
-		double total = Math.sqrt(distanciaGeneracional)/solutionsFPcurrent.size();
-		//System.out.println(total);
-		return total;
+		return  Math.sqrt(distanciaGeneracional)/solutionsFPcurrent.size();
 	}
-
-	public double Dispersion(ArrayList<State> solutions) throws BiffException, IOException{
-		//Soluciones obtenidas con la ejecuci�n del algoritmo X
-		LinkedList<Float> distancias = new LinkedList<Float>();
+  
+  /**
+   * Calculates the dispersion of solutions in the Pareto front.
+   * 
+   * @param solutions [List<State>] List of solutions.
+   * @return [double] Dispersion value.
+   * @throws BiffException If an error occurs while reading the Excel file.
+   * @throws IOException If an I/O error occurs.
+   */
+	public double calcularDispersion(List<State> solutions) throws BiffException, IOException{
+		LinkedList<Float> distancias = new LinkedList<>();
 		float distancia = 0;
-		float min = 1000;
+		float min;
 		for (Iterator<State> iter = solutions.iterator(); iter.hasNext();) {
-			State solutionVO = (State) iter.next();
+			State solutionVO = iter.next();
 			min = 1000;
 			for (Iterator<State> iterator = solutions.iterator(); iterator.hasNext();) {
-				State solVO = (State) iterator.next();
+				State solVO = iterator.next();
 				for (int i = 0; i < solutionVO.getEvaluation().size(); i++) {
 					if(!solutionVO.getEvaluation().equals(solVO.getEvaluation())){
 						distancia += (solutionVO.getEvaluation().get(i)- solVO.getEvaluation().get(i));
@@ -72,30 +93,35 @@ public class MetricasMultiobjetivo {
 			}
 			distancias.add(Float.valueOf(min));
 		}
-		//Calculando las media de las distancias 
 		float sum = 0;
 		for (Iterator<Float> iter = distancias.iterator(); iter.hasNext();) {
-			Float dist = (Float) iter.next();
+			Float dist = iter.next();
 			sum += dist;
 		}
 		float media = sum/distancias.size();
 		float sumDistancias = 0;
 		for (Iterator<Float> iter = distancias.iterator(); iter.hasNext();) {
-			Float dist = (Float) iter.next();
+			Float dist = iter.next();
 			sumDistancias += Math.pow((media - dist),2);
 		}
-		//Calculando la dispersion
 		double dispersion = 0;
 		if(solutions.size() > 1){
 			dispersion = Math.sqrt((1.0/(solutions.size()-1))*sumDistancias);
 		}
-		//System.out.println(dispersion);
 		return dispersion;
 	}
-	private boolean Contains(State solA, List<State> solutions){
+
+  /**
+   * Checks if a solution is contained in a list of solutions.
+   * 
+   * @param solA [State] The solution to check.
+   * @param solutions [List<State>] The list of solutions.
+   * @return [boolean] True if the solution is contained in the list, false otherwise.
+   */
+	private boolean contains(State solA, List<State> solutions){
 		int i = 0;
 		boolean result = false;
-		while(i<solutions.size()&& result==false){
+		while(i<solutions.size()&& !result){
 			if(solutions.get(i).getEvaluation().equals(solA.getEvaluation()))
 				result=true;
 			else
@@ -103,10 +129,17 @@ public class MetricasMultiobjetivo {
 		}
 		return result;
 	}
-	public double CalcularMin(ArrayList<Double> allMetrics){
+
+  /**
+   * Calculates the minimum value from a list of metrics.
+   * 
+   * @param allMetrics [List<Double>] List of metric values.
+   * @return [double] Minimum value.
+   */
+	public double calcularMin(List<Double> allMetrics){
 		double min = 1000;
 		for (Iterator<Double> iter = allMetrics.iterator(); iter.hasNext();) {
-			double element = (Double) iter.next();
+			double element = iter.next();
 			if(element < min){
 				min = element;
 			}
@@ -114,23 +147,34 @@ public class MetricasMultiobjetivo {
 		return min;
 	}
 
-	public double CalcularMax(ArrayList<Double> allMetrics){
+  /**
+   * Calculates the maximum value from a list of metrics.
+   * 
+   * @param allMetrics [List<Double>] List of metric values.
+   * @return [double] Maximum value.
+   */
+	public double calcularMax(List<Double> allMetrics){
 		double max = 0;
 		for (Iterator<Double> iter = allMetrics.iterator(); iter.hasNext();) {
-			double element = (Double) iter.next();
+			double element = iter.next();
 			if(element > max){
 				max = element;
 			}
 		}
 		return max;
 	}
-	public double CalcularMedia(ArrayList<Double> allMetrics){
+  /**
+   * Calculates the average value from a list of metrics.
+   * 
+   * @param allMetrics [List<Double>] List of metric values.
+   * @return [double] Average value.
+   */
+	public double calcularMedia(List<Double> allMetrics){
 		double sum = 0;
 		for (Iterator<Double> iter = allMetrics.iterator(); iter.hasNext();) {
-			double element = (Double) iter.next();
+			double element = iter.next();
 			sum = sum + element;
 		}
-		double media = sum/allMetrics.size();
-		return media;
+		return sum/allMetrics.size();
 	}
 }

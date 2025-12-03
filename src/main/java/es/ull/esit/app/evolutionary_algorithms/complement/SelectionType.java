@@ -1,5 +1,9 @@
-package main.java.es.ull.esit.app.evolutionary_algorithms.complement;
+package es.ull.esit.app.evolutionary_algorithms.complement;
 
+/**
+ * Enum defining the types of selection methods available for selecting parents in an evolutionary algorithm.
+ */
 public enum SelectionType {
-	RouletteSelection, TruncationSelection;
+	ROULETTE_SELECTION,    /** Roulette wheel selection method */
+  TRUNCATION_SELECTION;  /** Truncation selection method */
 }

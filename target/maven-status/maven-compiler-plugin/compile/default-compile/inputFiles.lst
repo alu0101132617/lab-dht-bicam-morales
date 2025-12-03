@@ -22,7 +22,6 @@
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/ReplaceType.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/SteadyStateReplace.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/problem/extension/FactoresPonderados.java
-/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/config/tspDynamic/TSPState.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiGenerator.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/evolutionary_algorithms/complement/Sampling.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/Particle.java
@@ -94,6 +93,7 @@
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/MultiCaseSimulatedAnnealing.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/candidate_type/CandidateType.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/complement/UpdateParameter.java
+/home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/config/tspdynamic/TSPState.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/candidate_type/SearchCandidate.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/metaheuristics/generators/Generator.java
 /home/alba/Documentos/Laboratorio de desarrollo y herramientas/Práctica 5. Gestión de proyectos y Pruebas unitarias/BiCIAM/src/main/java/es/ull/esit/app/local_search/acceptation_type/AcceptMulticase.java

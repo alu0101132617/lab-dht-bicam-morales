@@ -1,28 +1,39 @@
-package main.java.es.ull.esit.app.factory_method;
+package es.ull.esit.app.factory_method;
+
 import java.lang.reflect.InvocationTargetException;
 
-
+/**
+ * Class that provides a method to load and instantiate classes by name.
+ */
 public class FactoryLoader {
 
-	public static Object getInstance(String className) throws ClassNotFoundException, IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-		@SuppressWarnings("rawtypes")
-		Class c = null;
-		try {
-			c = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			System.out.println("El nombre de la clase no existe en el classpath");
-			e.printStackTrace();
-		}
-		Object o = null;
-		try {
-			o = c.newInstance();
-		} catch (InstantiationException e) {
-			System.out.println("Ha ocurrido un error al invocar el constructor de la clase");
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			System.out.println("Esta clase no tiene constructores disponibles");
-			e.printStackTrace();
-		}
-		return o;
-	}
+  /**
+   * Factory method to get an instance of a class given its name.
+   * 
+   * @param className [String] The fully qualified name of the class to instantiate.
+   * @return [Object] An instance of the specified class.
+   * @throws ClassNotFoundException If the class cannot be located.
+   * @throws IllegalAccessException If the class or its nullary constructor is not accessible.
+   * @throws InstantiationException If the class represents an abstract class, an interface, an array class, a primitive type, or void; or if the class has no nullary constructor; or if the instantiation fails for some other reason.
+   * @throws InvocationTargetException If the underlying constructor throws an exception.
+   * @throws NoSuchMethodException If the class does not have a nullary constructor.
+   */
+  public static Object getInstance(String className)
+      throws ClassNotFoundException, IllegalAccessException,
+      InstantiationException, InvocationTargetException,
+      NoSuchMethodException {
+
+    if (className == null || className.isEmpty()) {
+      throw new IllegalArgumentException("El nombre de la clase no puede ser nulo o vacío");
+    }
+
+    Class<?> c = Class.forName(className);
+
+    return c.getDeclaredConstructor().newInstance();
+  }
+
+  private FactoryLoader() {
+    // Private constructor to prevent instantiation of this utility class.
+  }
+
 }

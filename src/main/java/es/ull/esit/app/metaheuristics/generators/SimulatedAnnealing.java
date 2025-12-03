@@ -1,164 +1,392 @@
-package main.java.es.ull.esit.app.metaheuristics.generators;
+package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptType;
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
-import main.java.es.ull.esit.app.local_search.candidate_type.CandidateType;
-import main.java.es.ull.esit.app.local_search.candidate_type.CandidateValue;
-import main.java.es.ull.esit.app.local_search.complement.StrategyType;
-import main.java.es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
+import es.ull.esit.app.factory_method.FactoryAcceptCandidate;
+import es.ull.esit.app.local_search.acceptation_type.AcceptType;
+import es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
+import es.ull.esit.app.local_search.candidate_type.CandidateType;
+import es.ull.esit.app.local_search.candidate_type.CandidateValue;
+import es.ull.esit.app.local_search.complement.StrategyType;
+import es.ull.esit.app.metaheurictics.strategy.Strategy;
+import es.ull.esit.app.problem.definition.State;
 
-import main.java.es.ull.esit.app.problem.definition.State;
-
-import main.java.es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
-import main.java.es.ull.esit.app.factory_method.FactoryAcceptCandidate;
-
+/**
+ * Class that implements a Simulated Annealing generator.
+ */
 public class SimulatedAnnealing extends Generator {
 
-	private CandidateValue candidatevalue;
-	private AcceptType typeAcceptation;
-	private StrategyType strategy;
-	private CandidateType typeCandidate;
-	private State stateReferenceSA;
-    private IFFactoryAcceptCandidate ifacceptCandidate;
-    public static Double alpha;
-    public static Double tinitial;
-    public static Double tfinal;
-    public static int countIterationsT;
-    private int countRept;
-    private GeneratorType typeGenerator;
-    private List<State> listStateReference = new ArrayList<State>();
-    private float weight;
+  /** Utility used to select a candidate from the neighbourhood. */
+  private CandidateValue candidateValue;
 
-	//problemas dinamicos
-    public static int countGender = 0;
-    public static int countBetterGender = 0;
-    private int[] listCountBetterGender = new int[10];
-    private int[] listCountGender = new int[10];
-    private float[] listTrace = new float[1200000];
+  /** Acceptance rule for Simulated Annealing. */
+  private AcceptType typeAcceptation;
 
+  /** Strategy used when selecting candidates. */
+  private StrategyType strategy;
 
-    public GeneratorType getTypeGenerator() {
-		return typeGenerator;
-	}
+  /** Candidate selection rule (e.g. random neighbour). */
+  private CandidateType typeCandidate;
 
-	public void setTypeGenerator(GeneratorType typeGenerator) {
-		this.typeGenerator = typeGenerator;
-	}
+  /** Current reference state for Simulated Annealing. */
+  private State stateReferenceSA;
 
-	public SimulatedAnnealing(){
+  /** Cooling factor (T_{k+1} = alpha * T_k). */
+  private static Double alpha;
 
-    	super();
-    	/*SimulatedAnnealing.alpha = 0.93;
-    	SimulatedAnnealing.tinitial = 250.0;
-    	SimulatedAnnealing.tfinal = 41.66;
-    	SimulatedAnnealing.countIterationsT = 50;*/
+  /** Initial temperature. */
+  private static Double tinitial;
 
-    	this.typeAcceptation = AcceptType.AcceptNotBadT;
-		this.strategy = StrategyType.NORMAL;
-		this.typeCandidate = CandidateType.RandomCandidate;
-		this.candidatevalue = new CandidateValue();
-		this.typeGenerator = GeneratorType.SimulatedAnnealing;
-		this.weight = 50;
-		listTrace[0] = this.weight;
-		listCountBetterGender[0] = 0;
-		listCountGender[0] = 0;
+  /** Final temperature (possibly used externally as stopping condition). */
+  private static Double tfinal;
+
+  /* Iteration index (global) at which the next temperature update must be performed. */
+  private static int countIterationsT;
+
+  /* Stores the repetition period of the temperature (how many iterations before decreasing temperature again). */
+  private int countRept;
+
+  /** Generator type identifier. */
+  private GeneratorType typeGenerator;
+
+  /** List of reference states visited by the algorithm. */
+  private List<State> listStateReference = new ArrayList<>();
+
+  /** Weight associated with this generator in a multi–generator framework. */
+  private float weight;
+
+  /** Local “better gender” statistics array. */
+  private int[] listCountBetterGenderSA = new int[10];
+
+  /** Local gender statistics array. */
+  private int[] listCountGender = new int[10];
+
+  /** Trace of weight values during the execution. */
+  private float[] listTrace = new float[1200000];
+
+  /**
+   * Default constructor.
+   *
+   */
+  public SimulatedAnnealing() {
+    super();
+
+    this.typeAcceptation = AcceptType.AcceptNotBadT;
+    this.strategy = StrategyType.NORMAL;
+    this.typeCandidate = CandidateType.RandomCandidate;
+    this.candidateValue = new CandidateValue();
+    this.typeGenerator = GeneratorType.SimulatedAnnealing;
+
+    this.weight = 50.0f;
+    listTrace[0] = this.weight;
+    listCountBetterGenderSA[0] = 0;
+    listCountGender[0] = 0;
+
+    // Link inherited statistics array to the local one
+    this.listCountBetterGender = this.listCountBetterGenderSA;
+  }
+
+  /**
+   * Generates a new candidate state from the current reference using the
+   * neighbourhood defined by the operator.
+   *
+   * @param operatornumber [Integer] Operator index.
+   * @return [State] Generated candidate state or {@code null} if strategy/problem is not available.
+   */
+  @Override
+  public State generate(Integer operatornumber)
+      throws IllegalArgumentException, SecurityException,
+             ClassNotFoundException, InstantiationException,
+             IllegalAccessException, InvocationTargetException,
+             NoSuchMethodException {
+
+    Strategy strategyInstance = Strategy.getStrategy();
+    if (strategyInstance == null
+        || strategyInstance.getProblem() == null
+        || strategyInstance.getProblem().getOperator() == null) {
+      // Not enough context to generate a neighbour
+      return null;
     }
 
-	@Override
-	public State generate(Integer operatornumber) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		//<State>list=new ArrayList<State>();
-		List<State> neighborhood = new ArrayList<State>();
-		neighborhood = Strategy.getStrategy().getProblem().getOperator().generatedNewState(stateReferenceSA, operatornumber);
-	    State statecandidate = candidatevalue.stateCandidate(stateReferenceSA, typeCandidate, strategy, operatornumber, neighborhood);
-	   // list.add(statecandidate);
-	    return statecandidate;
-	}
+    List<State> neighbourhood = strategyInstance
+        .getProblem()
+        .getOperator()
+        .generatedNewState(stateReferenceSA, operatornumber);
 
-	@Override
-	public State getReference() {
-		return stateReferenceSA;
-	}
+    return candidateValue.stateCandidate(
+        stateReferenceSA,
+        typeCandidate,
+        strategy,
+        operatornumber,
+        neighbourhood
+    );
+  }
 
-	public void setStateRef(State stateRef) {
-		this.stateReferenceSA = stateRef;
-	}
+  /**
+   * Returns the current reference state.
+   *
+   * @return [State] Current reference state.
+   */
+  @Override
+  public State getReference() {
+    return stateReferenceSA;
+  }
 
-	@Override
-	public void setInitialReference(State stateInitialRef) {
-		this.stateReferenceSA = stateInitialRef;
-	}
+  /**
+   * Sets the current reference state.
+   *
+   * @param stateRef [State] New reference state.
+   */
+  public void setStateRef(State stateRef) {
+    this.stateReferenceSA = stateRef;
+  }
 
-	@Override
-	public void updateReference(State stateCandidate, Integer countIterationsCurrent)throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		countRept = countIterationsT;
-		ifacceptCandidate = new FactoryAcceptCandidate();
-		AcceptableCandidate candidate = ifacceptCandidate.createAcceptCandidate(typeAcceptation);
-		Boolean accept = candidate.acceptCandidate(stateReferenceSA, stateCandidate);
-		if(accept.equals(true))
-		  stateReferenceSA = stateCandidate;
-		if(countIterationsCurrent.equals(countIterationsT)){
-			tinitial = tinitial * alpha;
-			countIterationsT = countIterationsT + countRept;
-		}
-//		getReferenceList();
-	}
+  /**
+   * Sets the initial reference state for Simulated Annealing.
+   *
+   * @param stateInitialRef [State] Initial reference state.
+   */
+  @Override
+  public void setInitialReference(State stateInitialRef) {
+    this.stateReferenceSA = stateInitialRef;
+  }
 
-	@Override
-	public GeneratorType getType() {
-		return this.typeGenerator;
-	}
+  /**
+   * Updates the reference state according to the Simulated Annealing
+   * acceptance criteria and cooling schedule.
+   *
+   * @param stateCandidate          [State] Candidate state.
+   * @param countIterationsCurrent  [Integer] Current global iteration count.
+   */
+  @Override
+  public void updateReference(State stateCandidate, Integer countIterationsCurrent)
+      throws IllegalArgumentException, SecurityException,
+             ClassNotFoundException, InstantiationException,
+             IllegalAccessException, InvocationTargetException,
+             NoSuchMethodException {
 
-	@Override
-	public List<State> getReferenceList() {
-		listStateReference.add(stateReferenceSA);
-		return listStateReference;
-	}
+    // Defensive checks: if we do not have a reference or candidate, nothing to do
+    if (stateReferenceSA == null || stateCandidate == null) {
+      return;
+    }
 
-	@Override
-	public List<State> getSonList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    IFFactoryAcceptCandidate ifacceptCandidate = new FactoryAcceptCandidate();
+    AcceptableCandidate candidate = ifacceptCandidate.createAcceptCandidate(typeAcceptation);
 
-	@Override
-	public boolean awardUpdateREF(State stateCandidate) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    boolean accept = candidate.acceptCandidate(stateReferenceSA, stateCandidate);
+    if (accept) {
+      stateReferenceSA = stateCandidate;
+    }
+
+    // Cooling schedule:
+    // If we reach the iteration in which temperature must be updated,
+    // reduce T and set the next update at current + countRept.
+    if (countIterationsCurrent != null
+        && countIterationsT > 0
+        && alpha != null
+        && tinitial != null) {
+
+      // First time we enter, store the period
+      if (countRept == 0) {
+        countRept = countIterationsT;
+      }
+
+      if (countIterationsCurrent.equals(countIterationsT)) {
+        tinitial = tinitial * alpha;
+        countIterationsT = countIterationsT + countRept;
+      }
+    }
+  }
+
+  /**
+   * Returns the type of this generator.
+   *
+   * @return [GeneratorType] Generator type.
+   */
+  @Override
+  public GeneratorType getType() {
+    return this.typeGenerator;
+  }
+
+  /**
+   * Returns the generator type (explicit getter).
+   *
+   * @return [GeneratorType] Generator type.
+   */
+  public GeneratorType getTypeGenerator() {
+    return typeGenerator;
+  }
+
+  /**
+   * Sets the generator type (mainly for testing or configuration).
+   *
+   * @param typeGenerator [GeneratorType] New generator type.
+   */
+  public void setTypeGenerator(GeneratorType typeGenerator) {
+    this.typeGenerator = typeGenerator;
+  }
+
+  /**
+   * Returns the list of reference states visited so far.
+   * Each call appends the current reference state if not null.
+   *
+   * @return [List<State]] List of reference states.
+   */
+  @Override
+  public List<State> getReferenceList() {
+    if (stateReferenceSA != null) {
+      listStateReference.add(stateReferenceSA);
+    }
+    return new ArrayList<>(listStateReference);
+  }
+
+  /**
+   * Simulated Annealing does not explicitly maintain a son list.
+   * We return an empty list to avoid null handling.
+   *
+   * @return [List<State]] Empty list.
+   */
+  @Override
+  public List<State> getSonList() {
+    return new ArrayList<>();
+  }
+
+  /**
+   * For Simulated Annealing, we do not use an additional “award” criterion
+   * beyond the acceptance rule, so this always returns {@code false}.
+   *
+   * @param stateCandidate [State] Candidate state.
+   * @return [boolean] Always false.
+   */
+  @Override
+  public boolean awardUpdateREF(State stateCandidate) {
+    return false;
+  }
+
+  /**
+   * Returns the weight associated with this generator.
+   *
+   * @return [float] Weight value.
+   */
+  @Override
+  public float getWeight() {
+    return this.weight;
+  }
+
+  /**
+   * Sets the weight associated with this generator.
+   *
+   * @param weight [float] New weight value.
+   */
+  @Override
+  public void setWeight(float weight) {
+    this.weight = weight;
+  }
+
+  /**
+   * Returns the internal statistics array of “better gender” counts.
+   *
+   * @return [int[]] Better gender counts.
+   */
+  @Override
+  public int[] getListCountBetterGender() {
+    return this.listCountBetterGenderSA;
+  }
+
+  /**
+   * Returns the internal statistics array of gender counts.
+   *
+   * @return [int[]] Gender counts.
+   */
+  @Override
+  public int[] getListCountGender() {
+    return this.listCountGender;
+  }
+
+  /**
+   * Returns the trace of weight values.
+   *
+   * @return [float[]] Weight trace.
+   */
+  @Override
+  public float[] getTrace() {
+    return this.listTrace;
+  }
+
+  /**
+   * Gets the cooling factor.
+   * 
+   * @return [Double] Cooling factor.
+   */
+  public static Double getAlpha() {
+    return alpha;
+  }
+
+  /**
+   * Sets the cooling factor.
+   * 
+   * @param aAlpha [Double] New cooling factor.
+   */  
+  public static void setAlpha(Double aAlpha) {
+    alpha = aAlpha;
+  }
 
 
-	@Override
-	public float getWeight() {
-		// TODO Auto-generated method stub
-		return this.weight;
-	}
+  /**
+   * Gets the initial temperature.
+   * 
+   * @return [Double] Initial temperature.
+   */
+  public static Double getTinitial() {
+    return tinitial;
+  }
 
-	@Override
-	public void setWeight(float weight) {
-		// TODO Auto-generated method stub
-		this.weight = weight;
-	}
+  /**
+   * Sets the initial temperature.
+   * 
+   * @param aTinitial [Double] New initial temperature.
+   */
+  public static void setTinitial(Double aTinitial) {
+    tinitial = aTinitial;
+  }
 
-	@Override
-	public int[] getListCountBetterGender() {
-		// TODO Auto-generated method stub
-		return this.listCountBetterGender;
-	}
+  /**
+   * Gets the final temperature.
+   * 
+   * @return [Double] Final temperature.
+   */
+  public static Double getTfinal() {
+    return tfinal;
+  }
 
-	@Override
-	public int[] getListCountGender() {
-		// TODO Auto-generated method stub
-		return this.listCountGender;
-	}
+  /**
+   * Sets the final temperature.
+   * 
+   * @param aTfinal [Double] New final temperature.
+   */
+  public static void setTfinal(Double aTfinal) {
+    tfinal = aTfinal;
+  }
 
-	@Override
-	public float[] getTrace() {
-		// TODO Auto-generated method stub
-		return this.listTrace;
-	}
+  /**
+   * Gets the iteration index for the next temperature update.
+   * 
+   * @return [int] Iteration index.
+   */
+  public static int getCountIterationsT() {
+    return countIterationsT;
+  }
+
+  /**
+   * Sets the iteration index for the next temperature update.
+   * 
+   * @param aCountIterationsT [int] New iteration index.
+   */
+  public static void setCountIterationsT(int aCountIterationsT) {
+    countIterationsT = aCountIterationsT;
+  }
 
 }

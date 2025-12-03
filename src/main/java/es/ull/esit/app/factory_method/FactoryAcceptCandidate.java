@@ -1,26 +1,31 @@
-/**
- * @(#) FactoryAcceptCandidate.java
- */
-
-package main.java.es.ull.esit.app.factory_method;
+package es.ull.esit.app.factory_method;
 
 import java.lang.reflect.InvocationTargetException;
 
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptType;
-import main.java.es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
+import es.ull.esit.app.local_search.acceptation_type.AcceptType;
+import es.ull.esit.app.local_search.acceptation_type.AcceptableCandidate;
+import es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
 
+/**
+ * Class that implements the factory method for creating AcceptableCandidate instances.
+ */
+public class FactoryAcceptCandidate implements IFFactoryAcceptCandidate {
+  
+  /**
+   * Factory method to create an AcceptableCandidate based on the provided AcceptType.
+   *
+   * @param typeacceptation [AcceptType] The type of acceptation strategy to create.
+   * @return [AcceptableCandidate] An instance of the specified AcceptableCandidate type.
+   */
+  @Override
+  public AcceptableCandidate createAcceptCandidate(AcceptType typeacceptation)
+      throws IllegalArgumentException, SecurityException,
+             ClassNotFoundException, InstantiationException,
+             IllegalAccessException, InvocationTargetException,
+             NoSuchMethodException {
 
-import main.java.es.ull.esit.app.factory_interface.IFFactoryAcceptCandidate;
-
-
-
-
-public class FactoryAcceptCandidate implements IFFactoryAcceptCandidate{
-	private AcceptableCandidate acceptCandidate;
-	
-	public AcceptableCandidate createAcceptCandidate( AcceptType typeacceptation ) throws IllegalArgumentException, SecurityException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-		String className = "local_search.acceptation_type." + typeacceptation.toString();
-		acceptCandidate = (AcceptableCandidate) FactoryLoader.getInstance(className);
-		return acceptCandidate;
-	}
+    // OJO: aquí va el paquete REAL de tus clases de aceptación
+    String className = "es.ull.esit.app.local_search.acceptation_type." + typeacceptation.toString();
+    return (AcceptableCandidate) FactoryLoader.getInstance(className);
+  }
 }
