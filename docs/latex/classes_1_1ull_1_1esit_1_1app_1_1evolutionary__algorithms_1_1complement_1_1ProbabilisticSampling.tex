@@ -1,0 +1,76 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Probabilistic\+Sampling}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling}{}\label{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling}\index{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling@{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling}}
+
+
+Diagrama de herencia de es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Probabilistic\+Sampling
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Diagrama de colaboración de es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Probabilistic\+Sampling\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ State $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_ab0f7aefd8265f3dd9fdacec61c381b80}{sampling}} (List$<$ State $>$ fathers, int count\+Ind)
+\item 
+List$<$ State $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_a78d4346f97378168d720840aa9dcd499}{list\+State}} (int count\+Ind)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Class that implements the probabilistic sampling operator. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_a78d4346f97378168d720840aa9dcd499}\label{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_a78d4346f97378168d720840aa9dcd499} 
+\index{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling@{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling}!listState@{listState}}
+\index{listState@{listState}!es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling@{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling}}
+\doxysubsubsection{\texorpdfstring{listState()}{listState()}}
+{\footnotesize\ttfamily List$<$ State $>$ es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Probabilistic\+Sampling.\+list\+State (\begin{DoxyParamCaption}\item[{int}]{count\+Ind }\end{DoxyParamCaption})}
+
+Generates a list of new State objects. 
+\begin{DoxyParams}{Parámetros}
+{\em count\+Ind} & \mbox{[}int\mbox{]} the number of State objects to generate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}List$<$\+State$>$\mbox{]} the list of generated State objects. 
+\end{DoxyReturn}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_ab0f7aefd8265f3dd9fdacec61c381b80}\label{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1ProbabilisticSampling_ab0f7aefd8265f3dd9fdacec61c381b80} 
+\index{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling@{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling}!sampling@{sampling}}
+\index{sampling@{sampling}!es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling@{es.ull.esit.app.evolutionary\_algorithms.complement.ProbabilisticSampling}}
+\doxysubsubsection{\texorpdfstring{sampling()}{sampling()}}
+{\footnotesize\ttfamily List$<$ State $>$ es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Probabilistic\+Sampling.\+sampling (\begin{DoxyParamCaption}\item[{List$<$ State $>$}]{fathers,  }\item[{int}]{count\+Ind }\end{DoxyParamCaption})}
+
+Applies the probabilistic sampling operation to generate new states based on a list of parent states.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em fathers} & \mbox{[}List$<$\+State$>$\mbox{]} the list of parent states. \\
+\hline
+{\em count\+Ind} & \mbox{[}int\mbox{]} the number of new states to generate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}List$<$\+State$>$\mbox{]} the list of newly generated states. 
+\end{DoxyReturn}
+
+
+Reimplementado de \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Sampling_ac961694a08e645d1d43acacb6e8f5ab4}{es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Sampling}}.
+
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/evolutionary\+\_\+algorithms/complement/\mbox{\hyperlink{ProbabilisticSampling_8java}{Probabilistic\+Sampling.\+java}}\end{DoxyCompactItemize}

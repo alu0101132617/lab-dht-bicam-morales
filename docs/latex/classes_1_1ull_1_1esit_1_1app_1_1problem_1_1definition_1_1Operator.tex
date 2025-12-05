@@ -1,0 +1,64 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+problem.\+definition.\+Operator}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator}{}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator}\index{es.ull.esit.app.problem.definition.Operator@{es.ull.esit.app.problem.definition.Operator}}
+
+
+Diagrama de herencia de es.\+ull.\+esit.\+app.\+problem.\+definition.\+Operator
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+abstract List$<$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_afa079dba4b829e770ff0bc961470c096}{generated\+New\+State}} (\mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} state\+Current, Integer operatornumber)
+\item 
+abstract List$<$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_af2ae98c324aace81d4ba0f9761b7685d}{generate\+Random\+State}} (Integer operatornumber)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Abstract class that defines the operators of the problem. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_afa079dba4b829e770ff0bc961470c096}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_afa079dba4b829e770ff0bc961470c096} 
+\index{es.ull.esit.app.problem.definition.Operator@{es.ull.esit.app.problem.definition.Operator}!generatedNewState@{generatedNewState}}
+\index{generatedNewState@{generatedNewState}!es.ull.esit.app.problem.definition.Operator@{es.ull.esit.app.problem.definition.Operator}}
+\doxysubsubsection{\texorpdfstring{generatedNewState()}{generatedNewState()}}
+{\footnotesize\ttfamily abstract List$<$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} $>$ es.\+ull.\+esit.\+app.\+problem.\+definition.\+Operator.\+generated\+New\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}}}]{state\+Current,  }\item[{Integer}]{operatornumber }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Generates new states from the current state using the specified operator number.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em state\+Current} & \mbox{[}State\mbox{]} Current state from which new states will be generated. \\
+\hline
+{\em operatornumber} & \mbox{[}Integer\mbox{]} The operator number to be applied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}List$<$\+State$>$\mbox{]} A list of newly generated states. 
+\end{DoxyReturn}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_af2ae98c324aace81d4ba0f9761b7685d}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Operator_af2ae98c324aace81d4ba0f9761b7685d} 
+\index{es.ull.esit.app.problem.definition.Operator@{es.ull.esit.app.problem.definition.Operator}!generateRandomState@{generateRandomState}}
+\index{generateRandomState@{generateRandomState}!es.ull.esit.app.problem.definition.Operator@{es.ull.esit.app.problem.definition.Operator}}
+\doxysubsubsection{\texorpdfstring{generateRandomState()}{generateRandomState()}}
+{\footnotesize\ttfamily abstract List$<$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} $>$ es.\+ull.\+esit.\+app.\+problem.\+definition.\+Operator.\+generate\+Random\+State (\begin{DoxyParamCaption}\item[{Integer}]{operatornumber }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Generates random states using the specified operator number.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em operatornumber} & \mbox{[}Integer\mbox{]} The operator number to be applied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}List$<$\+State$>$\mbox{]} A list of randomly generated states. 
+\end{DoxyReturn}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/problem/definition/\mbox{\hyperlink{Operator_8java}{Operator.\+java}}\end{DoxyCompactItemize}

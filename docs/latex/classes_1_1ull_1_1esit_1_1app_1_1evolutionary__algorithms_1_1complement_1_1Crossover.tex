@@ -1,0 +1,50 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Crossover}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover}{}\label{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover}\index{es.ull.esit.app.evolutionary\_algorithms.complement.Crossover@{es.ull.esit.app.evolutionary\_algorithms.complement.Crossover}}
+
+
+Diagrama de herencia de es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Crossover
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+abstract State \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover_a5aac9a027156777803e686140c653f17}{crossover}} (State father1, State father2, double pc)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Abstract class that defines the crossover operator. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover_a5aac9a027156777803e686140c653f17}\label{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1Crossover_a5aac9a027156777803e686140c653f17} 
+\index{es.ull.esit.app.evolutionary\_algorithms.complement.Crossover@{es.ull.esit.app.evolutionary\_algorithms.complement.Crossover}!crossover@{crossover}}
+\index{crossover@{crossover}!es.ull.esit.app.evolutionary\_algorithms.complement.Crossover@{es.ull.esit.app.evolutionary\_algorithms.complement.Crossover}}
+\doxysubsubsection{\texorpdfstring{crossover()}{crossover()}}
+{\footnotesize\ttfamily abstract State es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Crossover.\+crossover (\begin{DoxyParamCaption}\item[{State}]{father1,  }\item[{State}]{father2,  }\item[{double}]{pc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Applies the crossover operation between two parent states with a given crossover probability. 
+\begin{DoxyParams}{Parámetros}
+{\em father1} & \mbox{[}State\mbox{]} the first parent state. \\
+\hline
+{\em father2} & \mbox{[}State\mbox{]} the second parent state. \\
+\hline
+{\em pc} & \mbox{[}double\mbox{]} the crossover probability. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}State\mbox{]} the resulting offspring state after crossover. 
+\end{DoxyReturn}
+
+
+Reimplementado en \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1OnePointCrossover_a369f42275c1bb135e1b95e8f9647b6ed}{es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+One\+Point\+Crossover}} y \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1evolutionary__algorithms_1_1complement_1_1UniformCrossover_a59a34ac976dd5a3f1423788b87cf585e}{es.\+ull.\+esit.\+app.\+evolutionary\+\_\+algorithms.\+complement.\+Uniform\+Crossover}}.
+
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/evolutionary\+\_\+algorithms/complement/\mbox{\hyperlink{Crossover_8java}{Crossover.\+java}}\end{DoxyCompactItemize}

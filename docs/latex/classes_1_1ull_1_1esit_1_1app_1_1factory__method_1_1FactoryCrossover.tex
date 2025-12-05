@@ -1,0 +1,71 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Crossover}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover}{}\label{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover}\index{es.ull.esit.app.factory\_method.FactoryCrossover@{es.ull.esit.app.factory\_method.FactoryCrossover}}
+
+
+Diagrama de herencia de es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Crossover
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Diagrama de colaboración de es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Crossover\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+Crossover \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover_a2d25916b860eddab5e3e6a08f3558d2d}{create\+Crossover}} (Crossover\+Type crossovertype)  throws Illegal\+Argument\+Exception, Security\+Exception, Class\+Not\+Found\+Exception, Instantiation\+Exception, Illegal\+Access\+Exception, Invocation\+Target\+Exception, No\+Such\+Method\+Exception 
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Class that implements the factory method for creating Crossover instances. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover_a2d25916b860eddab5e3e6a08f3558d2d}\label{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryCrossover_a2d25916b860eddab5e3e6a08f3558d2d} 
+\index{es.ull.esit.app.factory\_method.FactoryCrossover@{es.ull.esit.app.factory\_method.FactoryCrossover}!createCrossover@{createCrossover}}
+\index{createCrossover@{createCrossover}!es.ull.esit.app.factory\_method.FactoryCrossover@{es.ull.esit.app.factory\_method.FactoryCrossover}}
+\doxysubsubsection{\texorpdfstring{createCrossover()}{createCrossover()}}
+{\footnotesize\ttfamily Crossover es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Crossover.\+create\+Crossover (\begin{DoxyParamCaption}\item[{Crossover\+Type}]{crossovertype }\end{DoxyParamCaption}) throws Illegal\+Argument\+Exception, Security\+Exception, Class\+Not\+Found\+Exception, Instantiation\+Exception, Illegal\+Access\+Exception, Invocation\+Target\+Exception, No\+Such\+Method\+Exception}
+
+Factory method to create a Crossover based on the provided Crossover\+Type.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em crossovertype} & \mbox{[}Crossover\+Type\mbox{]} The type of crossover strategy to create. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}Crossover\mbox{]} An instance of the specified Crossover type. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Illegal\+Argument\+Exception} & If the provided type is invalid. \\
+\hline
+{\em Security\+Exception} & If there is a security violation during instantiation. \\
+\hline
+{\em Class\+Not\+Found\+Exception} & If the class corresponding to the type is not found. \\
+\hline
+{\em Instantiation\+Exception} & If there is an error during instantiation. \\
+\hline
+{\em Illegal\+Access\+Exception} & If there is an illegal access during instantiation. \\
+\hline
+{\em Invocation\+Target\+Exception} & If the constructor throws an exception. \\
+\hline
+{\em No\+Such\+Method\+Exception} & If the constructor is not found. \\
+\hline
+\end{DoxyExceptions}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/factory\+\_\+method/\mbox{\hyperlink{FactoryCrossover_8java}{Factory\+Crossover.\+java}}\end{DoxyCompactItemize}

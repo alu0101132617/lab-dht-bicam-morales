@@ -1,0 +1,47 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Loader}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryLoader}{}\label{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryLoader}\index{es.ull.esit.app.factory\_method.FactoryLoader@{es.ull.esit.app.factory\_method.FactoryLoader}}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static Object \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryLoader_a6018b91db0f309650571057a4173cb31}{get\+Instance}} (String class\+Name)  throws Class\+Not\+Found\+Exception, Illegal\+Access\+Exception,       Instantiation\+Exception, Invocation\+Target\+Exception,       No\+Such\+Method\+Exception 
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Class that provides a method to load and instantiate classes by name. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryLoader_a6018b91db0f309650571057a4173cb31}\label{classes_1_1ull_1_1esit_1_1app_1_1factory__method_1_1FactoryLoader_a6018b91db0f309650571057a4173cb31} 
+\index{es.ull.esit.app.factory\_method.FactoryLoader@{es.ull.esit.app.factory\_method.FactoryLoader}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!es.ull.esit.app.factory\_method.FactoryLoader@{es.ull.esit.app.factory\_method.FactoryLoader}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static Object es.\+ull.\+esit.\+app.\+factory\+\_\+method.\+Factory\+Loader.\+get\+Instance (\begin{DoxyParamCaption}\item[{String}]{class\+Name }\end{DoxyParamCaption}) throws Class\+Not\+Found\+Exception, Illegal\+Access\+Exception,       Instantiation\+Exception, Invocation\+Target\+Exception,       No\+Such\+Method\+Exception\hspace{0.3cm}{\ttfamily [static]}}
+
+Factory method to get an instance of a class given its name.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em class\+Name} & \mbox{[}String\mbox{]} The fully qualified name of the class to instantiate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}Object\mbox{]} An instance of the specified class. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Class\+Not\+Found\+Exception} & If the class cannot be located. \\
+\hline
+{\em Illegal\+Access\+Exception} & If the class or its nullary constructor is not accessible. \\
+\hline
+{\em Instantiation\+Exception} & If the class represents an abstract class, an interface, an array class, a primitive type, or void; or if the class has no nullary constructor; or if the instantiation fails for some other reason. \\
+\hline
+{\em Invocation\+Target\+Exception} & If the underlying constructor throws an exception. \\
+\hline
+{\em No\+Such\+Method\+Exception} & If the class does not have a nullary constructor. \\
+\hline
+\end{DoxyExceptions}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/factory\+\_\+method/\mbox{\hyperlink{FactoryLoader_8java}{Factory\+Loader.\+java}}\end{DoxyCompactItemize}

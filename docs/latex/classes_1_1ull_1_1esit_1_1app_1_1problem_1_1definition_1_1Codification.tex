@@ -1,0 +1,88 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification}{}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification}\index{es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}}
+
+
+Diagrama de herencia de es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+abstract boolean \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_acaa9082308bac48d93316553013cd533}{valid\+State}} (\mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}} state)
+\item 
+abstract Object \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_ad2136ec4aa325cd688df60dd54edf297}{get\+Variable\+Aleatory\+Value}} (int key)
+\item 
+abstract int \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a0cd0ec9e376d20e9ff65660d634bd3be}{get\+Aleatory\+Key}} ()
+\item 
+abstract int \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a3740d4cd65c008f4068a30d552f890b4}{get\+Variable\+Count}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Abstract class representing a codification of a problem. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a0cd0ec9e376d20e9ff65660d634bd3be}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a0cd0ec9e376d20e9ff65660d634bd3be} 
+\index{es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}!getAleatoryKey@{getAleatoryKey}}
+\index{getAleatoryKey@{getAleatoryKey}!es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}}
+\doxysubsubsection{\texorpdfstring{getAleatoryKey()}{getAleatoryKey()}}
+{\footnotesize\ttfamily abstract int es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification.\+get\+Aleatory\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Retrieves the total number of aleatory keys in the codification.
+
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}int\mbox{]} The number of aleatory keys. 
+\end{DoxyReturn}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_ad2136ec4aa325cd688df60dd54edf297}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_ad2136ec4aa325cd688df60dd54edf297} 
+\index{es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}!getVariableAleatoryValue@{getVariableAleatoryValue}}
+\index{getVariableAleatoryValue@{getVariableAleatoryValue}!es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}}
+\doxysubsubsection{\texorpdfstring{getVariableAleatoryValue()}{getVariableAleatoryValue()}}
+{\footnotesize\ttfamily abstract Object es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification.\+get\+Variable\+Aleatory\+Value (\begin{DoxyParamCaption}\item[{int}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Generates a random valid state according to the codification rules.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em key} & \mbox{[}int\mbox{]} The key or index of the variable to generate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}State\mbox{]} A randomly generated valid state. 
+\end{DoxyReturn}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a3740d4cd65c008f4068a30d552f890b4}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_a3740d4cd65c008f4068a30d552f890b4} 
+\index{es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}!getVariableCount@{getVariableCount}}
+\index{getVariableCount@{getVariableCount}!es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}}
+\doxysubsubsection{\texorpdfstring{getVariableCount()}{getVariableCount()}}
+{\footnotesize\ttfamily abstract int es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification.\+get\+Variable\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Retrieves the total number of variables in the codification.
+
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}int\mbox{]} The number of variables. 
+\end{DoxyReturn}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_acaa9082308bac48d93316553013cd533}\label{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1Codification_acaa9082308bac48d93316553013cd533} 
+\index{es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}!validState@{validState}}
+\index{validState@{validState}!es.ull.esit.app.problem.definition.Codification@{es.ull.esit.app.problem.definition.Codification}}
+\doxysubsubsection{\texorpdfstring{validState()}{validState()}}
+{\footnotesize\ttfamily abstract boolean es.\+ull.\+esit.\+app.\+problem.\+definition.\+Codification.\+valid\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1problem_1_1definition_1_1State}{State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [abstract]}}
+
+Checks if the given state is valid according to the codification rules.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em state} & \mbox{[}State\mbox{]} The state to be validated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+true if the state is valid, false otherwise. 
+\end{DoxyReturn}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/problem/definition/\mbox{\hyperlink{Codification_8java}{Codification.\+java}}\end{DoxyCompactItemize}

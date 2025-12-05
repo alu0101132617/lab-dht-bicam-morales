@@ -1,0 +1,54 @@
+\doxysection{Referencia de la clase es.\+ull.\+esit.\+app.\+local\+\_\+search.\+complement.\+Tabu\+Solutions}
+\hypertarget{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions}{}\label{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions}\index{es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ State $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_a105c12b2acf9f6bcec8d7582e08a4f83}{filter\+Neighborhood}} (List$<$ State $>$ list\+Neighborhood)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static final List$<$ State $>$ \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_af7c40c18748646909ae154d7a1e791ab}{list\+Tabu}} = new Array\+List$<$$>$()
+\item 
+static int \mbox{\hyperlink{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_aff6fdc98b3636b9a7f29bd87f603a9ff}{maxelements}} = 100
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Class that manages the tabu list for Tabu Search in local search algorithms. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_a105c12b2acf9f6bcec8d7582e08a4f83}\label{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_a105c12b2acf9f6bcec8d7582e08a4f83} 
+\index{es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}!filterNeighborhood@{filterNeighborhood}}
+\index{filterNeighborhood@{filterNeighborhood}!es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}}
+\doxysubsubsection{\texorpdfstring{filterNeighborhood()}{filterNeighborhood()}}
+{\footnotesize\ttfamily List$<$ State $>$ es.\+ull.\+esit.\+app.\+local\+\_\+search.\+complement.\+Tabu\+Solutions.\+filter\+Neighborhood (\begin{DoxyParamCaption}\item[{List$<$ State $>$}]{list\+Neighborhood }\end{DoxyParamCaption})}
+
+Filters the neighborhood states by removing those present in the tabu list. 
+\begin{DoxyParams}{Parámetros}
+{\em list\+Neighborhood} & \mbox{[}List$<$\+State$>$\mbox{]} List of neighborhood states. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+\mbox{[}List$<$\+State$>$\mbox{]} Filtered list of neighborhood states. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Documentación de datos miembro}
+\Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_af7c40c18748646909ae154d7a1e791ab}\label{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_af7c40c18748646909ae154d7a1e791ab} 
+\index{es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}!listTabu@{listTabu}}
+\index{listTabu@{listTabu}!es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}}
+\doxysubsubsection{\texorpdfstring{listTabu}{listTabu}}
+{\footnotesize\ttfamily final List$<$State$>$ es.\+ull.\+esit.\+app.\+local\+\_\+search.\+complement.\+Tabu\+Solutions.\+list\+Tabu = new Array\+List$<$$>$()\hspace{0.3cm}{\ttfamily [static]}}
+
+List of tabu states (accesible desde otros paquetes como Multiobjective\+Tabu\+Search y Tabu\+Search). \Hypertarget{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_aff6fdc98b3636b9a7f29bd87f603a9ff}\label{classes_1_1ull_1_1esit_1_1app_1_1local__search_1_1complement_1_1TabuSolutions_aff6fdc98b3636b9a7f29bd87f603a9ff} 
+\index{es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}!maxelements@{maxelements}}
+\index{maxelements@{maxelements}!es.ull.esit.app.local\_search.complement.TabuSolutions@{es.ull.esit.app.local\_search.complement.TabuSolutions}}
+\doxysubsubsection{\texorpdfstring{maxelements}{maxelements}}
+{\footnotesize\ttfamily int es.\+ull.\+esit.\+app.\+local\+\_\+search.\+complement.\+Tabu\+Solutions.\+maxelements = 100\hspace{0.3cm}{\ttfamily [static]}}
+
+Maximum number of elements allowed in the tabu list (nombre esperado\+: maxelements). 
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/es/ull/esit/app/local\+\_\+search/complement/\mbox{\hyperlink{TabuSolutions_8java}{Tabu\+Solutions.\+java}}\end{DoxyCompactItemize}
