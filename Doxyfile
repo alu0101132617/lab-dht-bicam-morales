@@ -1,0 +1,36 @@
+#---------------- PROYECTO ----------------
+PROJECT_NAME        = "BiCIAM"
+OUTPUT_LANGUAGE     = Spanish
+
+# Genera la salida en el directorio 'docs'
+OUTPUT_DIRECTORY    = docs
+
+#---------------- ENTRADAS ----------------
+# Rutas donde está tu código Java
+INPUT               = src/main/java \
+                      src/test/java
+
+RECURSIVE           = YES
+FILE_PATTERNS       = *.java
+
+# Opcional, pero útil para Java
+OPTIMIZE_OUTPUT_JAVA = YES
+
+#---------------- FORMATO SALIDA ----------------
+GENERATE_HTML       = NO
+GENERATE_LATEX      = YES
+
+#---------------- LATEX / PDF ----------------
+USE_PDFLATEX        = YES
+LATEX_OUTPUT        = latex
+LATEX_CMD_NAME      = pdflatex
+MAKEINDEX_CMD_NAME  = makeindex
+PDF_HYPERLINKS      = YES
+LATEX_BATCHMODE     = NO
+LATEX_HIDE_INDICES  = NO
+LATEX_SOURCE_CODE   = YES
+
+#---------------- VARIOS ----------------
+EXTRACT_ALL         = YES
+QUIET               = NO
+WARNINGS            = YES

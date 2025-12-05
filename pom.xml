@@ -35,9 +35,13 @@ Define las dependencias y plugins necesarios para:
     <jacoco.version>0.8.10</jacoco.version>
 
 
-    <!-- Configuración de SonarQube local (SonarCloud luego en el perfil) -->
-    <sonar.host.url>http://localhost:9000</sonar.host.url>
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+    <!-- Configuración de SonarCloud -->
+    <!-- URL de SonarCloud -->
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+     <!-- Organización que te indica SonarCloud -->
+    <sonar.organization>alu0101132617</sonar.organization>
+    <sonar.projectKey>alu0101132617_lab-dht-bicam-morales</sonar.projectKey>
+    
     <sonar.projectName>${project.name}</sonar.projectName>
     <sonar.sourceEncoding>${project.build.sourceEncoding}</sonar.sourceEncoding>
 
@@ -445,36 +449,19 @@ Define las dependencias y plugins necesarios para:
       <!-- Ruta del informe HTML: target/site/dependency-check-report.html -->
       <!-- [mvn site] -->
       <plugin>
-      <groupId>org.owasp</groupId>
-      <artifactId>dependency-check-maven</artifactId>
-      <version>12.1.9</version>
-      <reportSets>
-        <reportSet>
-          <reports>
-            <report>aggregate</report>
-          </reports>
-        </reportSet>
-      </reportSets>
-    </plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>12.1.9</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
 
     </plugins>
   </reporting>
-
-  <!-- Perfil para SonarCloud / SonarQube (ejecutar con -Psonar) -->
-  <profiles>
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <!-- Ajustar estos valores para SonarCloud o SonarQube remoto -->
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
-        <!-- <sonar.organization>tu_organizacion</sonar.organization> -->
-        <!-- <sonar.login>TU_TOKEN_SONAR</sonar.login> -->
-      </properties>
-    </profile>
-  </profiles>
-   
 
 </project>
