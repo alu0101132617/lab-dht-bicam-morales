@@ -201,39 +201,39 @@ public class TabuSearch extends Generator {
     // Tabu list management
     if (strategy.equals(StrategyType.TABU) && accept) {
       // If there is still room, just check if it's already Tabu
-      if (TabuSolutions.listTabu.size() < TabuSolutions.maxelements) {
+      if (TabuSolutions.getListTabu().size() < TabuSolutions.maxelements) {
         boolean found = false;
         int count = 0;
 
-        while (!found && count < TabuSolutions.listTabu.size()) {
-          if (TabuSolutions.listTabu.get(count).comparator(stateCandidate)) {
+        while (!found && count < TabuSolutions.getListTabu().size()) {
+          if (TabuSolutions.getListTabu().get(count).comparator(stateCandidate)) {
             found = true;
           }
           count++;
         }
 
         if (!found) {
-          TabuSolutions.listTabu.add(stateCandidate);
+          TabuSolutions.getListTabu().add(stateCandidate);
         }
 
       } else {
         // Remove oldest element and then insert if not present
-        if (!TabuSolutions.listTabu.isEmpty()) {
-          TabuSolutions.listTabu.remove(0);
+        if (!TabuSolutions.getListTabu().isEmpty()) {
+          TabuSolutions.getListTabu().remove(0);
         }
 
         boolean found = false;
         int count = 0;
 
-        while (!found && count < TabuSolutions.listTabu.size()) {
-          if (TabuSolutions.listTabu.get(count).comparator(stateCandidate)) {
+        while (!found && count < TabuSolutions.getListTabu().size()) {
+          if (TabuSolutions.getListTabu().get(count).comparator(stateCandidate)) {
             found = true;
           }
           count++;
         }
 
         if (!found) {
-          TabuSolutions.listTabu.add(stateCandidate);
+          TabuSolutions.getListTabu().add(stateCandidate);
         }
       }
     }

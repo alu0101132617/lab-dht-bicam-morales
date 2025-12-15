@@ -4,7 +4,7 @@ import es.ull.esit.app.metaheuristics.generators.*;
 import es.ull.esit.app.metaheurictics.strategy.*;
 
 import java.util.List;
-import java.util.Random;
+import java.security.SecureRandom;
 
 import es.ull.esit.app.problem.definition.State;
 
@@ -14,7 +14,7 @@ import es.ull.esit.app.problem.definition.State;
 public class AcceptMulticase extends AcceptableCandidate {
 
   /** Random number generator for acceptance probability calculations. */
-  private Random rdm = new Random();
+  private SecureRandom rdm = new SecureRandom();
 
   /**
    * Determines if a candidate state is acceptable based on multicase criteria.

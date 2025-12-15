@@ -1,6 +1,7 @@
 package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,7 +33,7 @@ public class EvolutionStrategies extends Generator {
 	private List<State> listStateReference = new ArrayList<>();
 
   /** Random number generator. */
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
   
   /** Type of generator. */
 	private GeneratorType generatorType;

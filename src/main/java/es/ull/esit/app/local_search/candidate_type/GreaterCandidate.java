@@ -1,7 +1,7 @@
 package es.ull.esit.app.local_search.candidate_type;
 
-import java.util.Random;
 import java.lang.reflect.InvocationTargetException;
+import java.security.SecureRandom;
 import java.util.List;
 
 import es.ull.esit.app.problem.definition.State;
@@ -11,7 +11,7 @@ import es.ull.esit.app.problem.definition.State;
  */
 public class GreaterCandidate extends SearchCandidate {
 
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
 	
   /**
    * Creates a new State from the list of neighborhood states with the greatest objective function value.

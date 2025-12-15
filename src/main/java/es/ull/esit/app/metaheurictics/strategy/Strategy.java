@@ -156,7 +156,7 @@ public class Strategy {
     if (generatorType.equals(GeneratorType.MultiGenerator)) {
       initializeGenerators();
       MultiGenerator.initializeGenerators();
-      MultiGenerator.listGeneratedPP.clear();
+      MultiGenerator.getListGeneratedPP().clear();
       multiGenerator = ((MultiGenerator) generator).copy();
     } else {
       initialize();
@@ -186,7 +186,7 @@ public class Strategy {
             updateCountGender();
             countPeriodo = countPeriodo + countPeriodChange / 10;
             periodo = 0;
-            MultiGenerator.activeGenerator.countBetterGender = 0;
+            MultiGenerator.getActiveGenerator().countBetterGender = 0;
           }
 
           updateWeight();
@@ -227,7 +227,7 @@ public class Strategy {
             updateCountGender();
             countPeriodo = countPeriodo + countPeriodChange / 10;
             periodo++;
-            MultiGenerator.activeGenerator.countBetterGender = 0;
+            MultiGenerator.getActiveGenerator().countBetterGender = 0;
           }
           stateCandidate = multiGenerator.generate(operatornumber);
           problem.evaluate(stateCandidate);
@@ -590,7 +590,7 @@ public class Strategy {
 
     if (generatorType.equals(GeneratorType.MultiGenerator)) {
       updateRefMultiG();
-      bestState = MultiGenerator.listStateReference.get(MultiGenerator.listStateReference.size() - 1);
+      bestState = MultiGenerator.getListStateReference().get(MultiGenerator.getListStateReference().size() - 1);
     } else {
       updateRefGenerator(generator);
       bestState = generator.getReference();

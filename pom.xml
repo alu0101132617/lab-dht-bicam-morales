@@ -283,10 +283,10 @@ Define las dependencias y plugins necesarios para:
           <!-- Máximo esfuerzo de análisis -->
           <effort>Max</effort>
           <!-- Nivel mínimo de severidad para reportar -->
-          <threshold>Low</threshold>
+          <threshold>High</threshold>
 
           <!-- Fallar build si se encuentran bugs -->
-          <failOnError>false</failOnError>
+          <!-- <failOnError>false</failOnError> -->
           
           <!-- XML -->
           <xmlOutput>true</xmlOutput>

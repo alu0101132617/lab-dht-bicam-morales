@@ -1,6 +1,7 @@
 package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +41,7 @@ public class GeneticAlgorithm extends Generator {
   private List<State> listState = new ArrayList<>();
 
   /** Random number generator. */
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
 
   /** Static configuration parameters for the Genetic Algorithm. */
   private static MutationType mutationType;

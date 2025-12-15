@@ -1,7 +1,7 @@
 package es.ull.esit.app.local_search.candidate_type;
 
 import java.util.List;
-import java.util.Random;
+import java.security.SecureRandom;
 
 import es.ull.esit.app.problem.definition.State;
 
@@ -10,7 +10,7 @@ import es.ull.esit.app.problem.definition.State;
  */
 public class RandomCandidate extends SearchCandidate {
 
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
   /**
    * Selects a random state from the provided list of neighboring states.
    * @param listNeighborhood List of neighboring states.

@@ -11,7 +11,7 @@ import es.ull.esit.app.problem.definition.State;
 public class TabuSolutions {
 
   /** List of tabu states (accesible desde otros paquetes como MultiobjectiveTabuSearch y TabuSearch). */
-  public static final List<State> listTabu = new ArrayList<>();
+  private static final List<State> listTabu = new ArrayList<>();
 
   /** Maximum number of elements allowed in the tabu list (nombre esperado: maxelements). */
   public static int maxelements = 100;
@@ -43,5 +43,14 @@ public class TabuSolutions {
       listFiltrate = listNeighborhood;
     }
     return listFiltrate;
+  }
+
+  /**
+   * Gets the tabu list.
+   * 
+   * @return [List<State>] The tabu list.
+   */
+  public static List<State> getListTabu() {
+    return listTabu;
   }
 }

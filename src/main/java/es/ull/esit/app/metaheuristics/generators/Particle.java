@@ -1,6 +1,7 @@
 package es.ull.esit.app.metaheuristics.generators;
 
 import java.lang.reflect.InvocationTargetException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,9 @@ public class Particle extends Generator {
 
   /** Trace of weight values. */
   private final float[] listTrace = new float[1200000];
+
+  /** Random number generator for internal use. */
+  private SecureRandom random = new SecureRandom();
 
   /**
    * Default constructor.
@@ -183,8 +187,8 @@ public class Particle extends Generator {
           / strategy.getCountMax())
           * ParticleSwarmOptimization.getCountCurrentIterPSO();
 
-    double rand1 = Math.random();
-    double rand2 = Math.random();
+    double rand1 = random.nextDouble();
+    double rand2 = random.nextDouble();
 
     // Learning factors (cognitive + social)
     int learning = ParticleSwarmOptimization.getLearning1()
@@ -274,7 +278,7 @@ public class Particle extends Generator {
 
     // Binary case
     for (int i = 0; i < size; i++) {
-      double rand = Math.random();
+      double rand = random.nextDouble();
       double v = (Double) actualVelocity.get(i);
       double s = 1.0 / (1.0 + 1.72 * v);
       if (rand < s) {

@@ -24,7 +24,7 @@ class TabuSearchTest {
 
     @BeforeEach
     void cleanTabu() {
-        TabuSolutions.listTabu.clear();
+        TabuSolutions.getListTabu().clear();
     }
 
     // Helpers
@@ -165,33 +165,33 @@ class TabuSearchTest {
         // 1) Primer candidato
         ts.updateReference(s1, 0);
         assertSame(s1, ts.getReference());
-        assertTrue(TabuSolutions.listTabu.contains(s1));
+        assertTrue(TabuSolutions.getListTabu().contains(s1));
 
         // 2) Mismo candidato -> no duplica
         ts.updateReference(s1, 1);
         assertSame(s1, ts.getReference());
 
         // 3) Llenar Tabu para forzar rama de lista llena
-        while (TabuSolutions.listTabu.size() < TabuSolutions.maxelements) {
-            TabuSolutions.listTabu.add(mock(State.class));
+        while (TabuSolutions.getListTabu().size() < TabuSolutions.maxelements) {
+            TabuSolutions.getListTabu().add(mock(State.class));
         }
 
         // 4) Nuevo candidato s2
         ts.updateReference(s2, 2);
         assertSame(s2, ts.getReference());
-        assertTrue(TabuSolutions.listTabu.contains(s2));
-        assertTrue(TabuSolutions.listTabu.size() <= TabuSolutions.maxelements);
+        assertTrue(TabuSolutions.getListTabu().contains(s2));
+        assertTrue(TabuSolutions.getListTabu().size() <= TabuSolutions.maxelements);
 
         // 5) s2 de nuevo
         ts.updateReference(s2, 3);
         assertSame(s2, ts.getReference());
-        assertTrue(TabuSolutions.listTabu.size() <= TabuSolutions.maxelements);
+        assertTrue(TabuSolutions.getListTabu().size() <= TabuSolutions.maxelements);
 
         // 6) Nuevo candidato s3
         ts.updateReference(s3, 4);
         assertSame(s3, ts.getReference());
-        assertTrue(TabuSolutions.listTabu.contains(s3));
-        assertTrue(TabuSolutions.listTabu.size() <= TabuSolutions.maxelements);
+        assertTrue(TabuSolutions.getListTabu().contains(s3));
+        assertTrue(TabuSolutions.getListTabu().size() <= TabuSolutions.maxelements);
     }
 
     // --------------------------------------------------------

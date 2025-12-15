@@ -4,6 +4,7 @@ import es.ull.esit.app.problem.definition.State;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ class UniformCrossoverTest {
      * Random de prueba que siempre devuelve 1 en nextInt(2),
      * para que la máscara tenga mascara[0] = 1 y el resto a 0 (por la implementación).
      */
-    private static class TestRandom extends Random {
+    private static class TestRandom extends SecureRandom {
         @Override
         public int nextInt(int bound) {
             return 1; // siempre 1

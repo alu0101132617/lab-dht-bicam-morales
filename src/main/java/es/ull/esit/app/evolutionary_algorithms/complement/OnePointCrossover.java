@@ -1,8 +1,8 @@
 package es.ull.esit.app.evolutionary_algorithms.complement;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import es.ull.esit.app.metaheurictics.strategy.Strategy;
 import es.ull.esit.app.problem.definition.State;
@@ -51,13 +51,13 @@ public class OnePointCrossover extends Crossover {
 		
 			int choice = random.nextInt(2);
 			if(choice == 0)
-				newInd.setCode((ArrayList<Object>) ind1);
-			else newInd.setCode((ArrayList<Object>) ind2); 
+				newInd.setCode(ind1);
+			else newInd.setCode(ind2); 
 		}
 		return newInd;			
 	}
 
   /** Random number generator used for crossover operations. */
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
 	
 }

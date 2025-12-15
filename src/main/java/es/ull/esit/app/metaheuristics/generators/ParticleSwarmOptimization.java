@@ -724,7 +724,7 @@ public class ParticleSwarmOptimization extends Generator {
    * 
    * @param gBest [State] The new global best state.
   */
-  public void setGBest(State gBest) {
+  public static void setGBest(State gBest) {
     ParticleSwarmOptimization.gBest = gBest;
   }
 

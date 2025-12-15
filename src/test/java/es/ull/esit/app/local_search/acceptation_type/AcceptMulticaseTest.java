@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.lang.reflect.Field;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,7 +28,7 @@ class AcceptMulticaseTest {
      * Deterministic Random used inside AcceptMulticase so that
      * accept / reject decisions depending on random() are reproducible.
      */
-    private static class TestRandom extends Random {
+    private static class TestRandom extends SecureRandom {
         @Override
         public float nextFloat() {
             // Always 0 → if pAccept > 0, the candidate is accepted.

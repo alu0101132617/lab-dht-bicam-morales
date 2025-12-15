@@ -192,7 +192,7 @@ public class MultiobjectiveTabuSearch extends Generator {
       return;
     }
 
-    List<State> tabu = TabuSolutions.listTabu;
+    List<State> tabu = TabuSolutions.getListTabu();
     int max = TabuSolutions.maxelements;
 
     if (tabu.size() < max) {

@@ -13,7 +13,7 @@ class TabuSolutionsTest {
     @Test
     void filterNeighborhoodShouldReturnSameListWhenTabuListIsEmpty() {
         // Dejamos la lista tabu vacía
-        TabuSolutions.listTabu.clear();
+        TabuSolutions.getListTabu().clear();
 
         TabuSolutions tabuSolutions = new TabuSolutions();
 
@@ -35,7 +35,7 @@ class TabuSolutionsTest {
 
     @Test
     void filterNeighborhoodShouldRemoveTabuStatesButNotAll() {
-        TabuSolutions.listTabu.clear();
+        TabuSolutions.getListTabu().clear();
 
         TabuSolutions tabuSolutions = new TabuSolutions();
 
@@ -43,7 +43,7 @@ class TabuSolutionsTest {
         State allowed = new State();
 
         // El mismo objeto "tabu" está en la lista tabu y en el vecindario
-        TabuSolutions.listTabu.add(tabu);
+        TabuSolutions.getListTabu().add(tabu);
 
         List<State> neighborhood = new ArrayList<>();
         neighborhood.add(tabu);
@@ -57,15 +57,15 @@ class TabuSolutionsTest {
 
     @Test
     void filterNeighborhoodShouldThrowWhenAllStatesAreTabu() {
-        TabuSolutions.listTabu.clear();
+        TabuSolutions.getListTabu().clear();
 
         TabuSolutions tabuSolutions = new TabuSolutions();
 
         State tabu1 = new State();
         State tabu2 = new State();
 
-        TabuSolutions.listTabu.add(tabu1);
-        TabuSolutions.listTabu.add(tabu2);
+        TabuSolutions.getListTabu().add(tabu1);
+        TabuSolutions.getListTabu().add(tabu2);
 
         List<State> neighborhood = new ArrayList<>();
         neighborhood.add(tabu1);

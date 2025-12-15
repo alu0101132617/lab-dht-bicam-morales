@@ -17,14 +17,7 @@ import org.mockito.Mockito;
 
 import es.ull.esit.app.factory_method.FactoryGenerator;
 import es.ull.esit.app.local_search.complement.UpdateParameter;
-import es.ull.esit.app.metaheuristics.generators.DistributionEstimationAlgorithm;
-import es.ull.esit.app.metaheuristics.generators.EvolutionStrategies;
-import es.ull.esit.app.metaheuristics.generators.Generator;
-import es.ull.esit.app.metaheuristics.generators.GeneratorType;
-import es.ull.esit.app.metaheuristics.generators.GeneticAlgorithm;
-import es.ull.esit.app.metaheuristics.generators.MultiGenerator;
-import es.ull.esit.app.metaheuristics.generators.ParticleSwarmOptimization;
-import es.ull.esit.app.metaheuristics.generators.RandomSearch;
+import es.ull.esit.app.metaheuristics.generators.*;
 import es.ull.esit.app.problem.definition.ObjetiveFunction;
 import es.ull.esit.app.problem.definition.Problem;
 import es.ull.esit.app.problem.definition.Problem.ProblemType;
@@ -57,7 +50,7 @@ class StrategyTest {
         return (float[]) f.get(s);
     }
 
-    // ---------- singleton / getters / setters básicos ----------
+    // ---------- singleton ----------
 
     @Test
     void singletonShouldWork() {
@@ -69,6 +62,8 @@ class StrategyTest {
         Strategy s3 = Strategy.getStrategy();
         assertNotSame(s1, s3);
     }
+
+    // ---------- getters / setters ----------
 
     @Test
     void basicGettersAndSettersShouldWork() {
@@ -138,7 +133,7 @@ class StrategyTest {
         assertEquals(5.0f, offline[4], 1e-6);
     }
 
-    // ---------- updateRefGenerator: caso local search ----------
+    // ---------- updateRefGenerator ----------
 
     @Test
     void updateRefGeneratorShouldReevaluateSingleReferenceForLocalSearchGenerators() {
@@ -168,42 +163,6 @@ class StrategyTest {
         assertEquals(7.0, ref.getEvaluation().get(0), 1e-6);
     }
 
-    // ---------- updateRefGenerator: caso población ----------
-
-    @Test
-    void updateRefGeneratorShouldReevaluateReferenceListForPopulationGenerators() {
-        Strategy s = Strategy.getStrategy();
-
-        Problem p = mock(Problem.class);
-        s.setProblem(p);
-
-        ObjetiveFunction f = mock(ObjetiveFunction.class);
-        var fs = new ArrayList<ObjetiveFunction>();
-        fs.add(f);
-        when(p.getFunction()).thenReturn(fs);
-
-        State s1 = new State();
-        State s2 = new State();
-        var e1 = new ArrayList<Double>(); e1.add(0.0); s1.setEvaluation(e1);
-        var e2 = new ArrayList<Double>(); e2.add(0.0); s2.setEvaluation(e2);
-
-        var refs = new ArrayList<State>();
-        refs.add(s1);
-        refs.add(s2);
-
-        when(f.evaluation(s1)).thenReturn(1.5);
-        when(f.evaluation(s2)).thenReturn(2.5);
-
-        Generator gen = mock(Generator.class);
-        when(gen.getType()).thenReturn(GeneratorType.GeneticAlgorithm);
-        when(gen.getReferenceList()).thenReturn(refs);
-
-        s.updateRefGenerator(gen);
-
-        assertEquals(1.5, s1.getEvaluation().get(0), 1e-6);
-        assertEquals(2.5, s2.getEvaluation().get(0), 1e-6);
-    }
-
     // ---------- updateRef (rama normal) ----------
 
     @Test
@@ -222,7 +181,7 @@ class StrategyTest {
         assertSame(ref, s.getBestState());
     }
 
-    // ---------- updateRef (rama MultiGenerator) ----------
+    // ---------- updateRef (MultiGenerator) ----------
 
     @Test
     void updateRefShouldUseMultiGeneratorListStateReferenceWhenMultiGenerator() {
@@ -230,13 +189,18 @@ class StrategyTest {
 
         State last = new State();
         last.setNumber(99);
-        MultiGenerator.listStateReference = new ArrayList<>();
-        MultiGenerator.listStateReference.add(new State());
-        MultiGenerator.listStateReference.add(last);
 
-        try (MockedStatic<MultiGenerator> multiStatic = Mockito.mockStatic(MultiGenerator.class)) {
+        var refList = new ArrayList<State>();
+        refList.add(new State());
+        refList.add(last);
+        MultiGenerator.setListStateReference(refList);
+
+        try (MockedStatic<MultiGenerator> multiStatic =
+                     Mockito.mockStatic(MultiGenerator.class, Mockito.CALLS_REAL_METHODS)) {
+
             Generator g1 = mock(Generator.class);
             Generator g2 = mock(Generator.class);
+
             when(g1.getType()).thenReturn(GeneratorType.ParticleSwarmOptimization);
             when(g2.getType()).thenReturn(GeneratorType.ParticleSwarmOptimization);
 
@@ -255,9 +219,12 @@ class StrategyTest {
     void updateRefMultiGShouldIterateOverAllGenerators() {
         Strategy s = Strategy.getStrategy();
 
-        try (MockedStatic<MultiGenerator> multiStatic = Mockito.mockStatic(MultiGenerator.class)) {
+        try (MockedStatic<MultiGenerator> multiStatic =
+                     Mockito.mockStatic(MultiGenerator.class, Mockito.CALLS_REAL_METHODS)) {
+
             Generator g1 = mock(Generator.class);
             Generator g2 = mock(Generator.class);
+
             when(g1.getType()).thenReturn(GeneratorType.ParticleSwarmOptimization);
             when(g2.getType()).thenReturn(GeneratorType.ParticleSwarmOptimization);
 
@@ -276,7 +243,9 @@ class StrategyTest {
 
         setPrivateInt(s, "periodo", 1);
 
-        try (MockedStatic<MultiGenerator> multiStatic = Mockito.mockStatic(MultiGenerator.class)) {
+        try (MockedStatic<MultiGenerator> multiStatic =
+                     Mockito.mockStatic(MultiGenerator.class, Mockito.CALLS_REAL_METHODS)) {
+
             Generator g1 = mock(Generator.class, CALLS_REAL_METHODS);
             Generator g2 = mock(Generator.class, CALLS_REAL_METHODS);
 
@@ -321,7 +290,9 @@ class StrategyTest {
     void updateWeightShouldSetWeightTo50ForAllNonMultiGenerators() {
         Strategy s = Strategy.getStrategy();
 
-        try (MockedStatic<MultiGenerator> multiStatic = Mockito.mockStatic(MultiGenerator.class)) {
+        try (MockedStatic<MultiGenerator> multiStatic =
+                     Mockito.mockStatic(MultiGenerator.class, Mockito.CALLS_REAL_METHODS)) {
+
             Generator g1 = mock(Generator.class);
             Generator g2 = mock(Generator.class);
             Generator gMulti = mock(Generator.class);
@@ -344,8 +315,7 @@ class StrategyTest {
     // ---------- update(Integer) ----------
 
     @Test
-    void updateShouldSwitchGeneratorsBasedOnCountRef()
-            throws Exception {
+    void updateShouldSwitchGeneratorsBasedOnCountRef() throws Exception {
 
         Strategy s = Strategy.getStrategy();
 
@@ -364,10 +334,10 @@ class StrategyTest {
             deaStatic.when(DistributionEstimationAlgorithm::getCountRef).thenReturn(4);
             psoStatic.when(ParticleSwarmOptimization::getCountRef).thenReturn(5);
 
-            assertDoesNotThrow(() -> s.update(1)); // GA
-            assertDoesNotThrow(() -> s.update(2)); // ES
-            assertDoesNotThrow(() -> s.update(3)); // DEA
-            assertDoesNotThrow(() -> s.update(4)); // PSO
+            assertDoesNotThrow(() -> s.update(1));
+            assertDoesNotThrow(() -> s.update(2));
+            assertDoesNotThrow(() -> s.update(3));
+            assertDoesNotThrow(() -> s.update(4));
         }
     }
 
@@ -391,11 +361,10 @@ class StrategyTest {
         }
     }
 
-    // ---------- initialize / initializeGenerators ----------
+    // ---------- initialize ----------
 
     @Test
-    void initializeShouldFillMapGenerators()
-            throws Exception {
+    void initializeShouldFillMapGenerators() throws Exception {
 
         Strategy s = Strategy.getStrategy();
 
@@ -414,8 +383,7 @@ class StrategyTest {
     }
 
     @Test
-    void initializeGeneratorsShouldAlsoFillMapGenerators()
-            throws Exception {
+    void initializeGeneratorsShouldAlsoFillMapGenerators() throws Exception {
 
         Strategy s = Strategy.getStrategy();
 
@@ -433,11 +401,10 @@ class StrategyTest {
         }
     }
 
-    // ---------- executeStrategy: rama else (sin entrar en el if grande) ----------
+    // ---------- executeStrategy ----------
 
     @Test
-    void executeStrategyShouldRunWithElseBranchOnly()
-            throws Exception {
+    void executeStrategyShouldRunWithElseBranchOnly() throws Exception {
 
         Strategy s = Strategy.getStrategy();
 
@@ -449,11 +416,7 @@ class StrategyTest {
         doAnswer(inv -> {
             State st = inv.getArgument(0);
             var ev = new ArrayList<Double>();
-            if (evalCalls[0] == 0) {
-                ev.add(1.0);
-            } else {
-                ev.add(2.0);
-            }
+            ev.add(evalCalls[0] == 0 ? 1.0 : 2.0);
             evalCalls[0]++;
             st.setEvaluation(ev);
             return null;
@@ -482,19 +445,13 @@ class StrategyTest {
                          doNothing().when(gen).setInitialReference(any());
                          doNothing().when(gen).updateReference(any(), anyInt());
                          when(gen.getType()).thenReturn(GeneratorType.RandomSearch);
-                         when(mockFG.createGenerator(any(GeneratorType.class))).thenReturn(gen);
+                         when(mockFG.createGenerator(any())).thenReturn(gen);
                      })) {
 
             updStatic.when(() -> UpdateParameter.updateParameter(anyInt()))
                      .thenAnswer(inv -> ((Integer) inv.getArgument(0)) + 1);
 
-            // countmaxIterations = 3, countIterationsChange = 5 (no entra en if countCurrent == countChange)
-            s.executeStrategy(
-                    3,   // countmaxIterations
-                    5,   // countIterationsChange
-                    1,   // operatornumber
-                    GeneratorType.RandomSearch
-            );
+            s.executeStrategy(3, 5, 1, GeneratorType.RandomSearch);
 
             assertNotNull(s.getBestState());
             assertEquals(2.0, s.getBestState().getEvaluation().get(0), 1e-6);

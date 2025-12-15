@@ -2,7 +2,7 @@ package es.ull.esit.app.evolutionary_algorithms.complement;
 
 import es.ull.esit.app.problem.definition.State;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * Class that represents the Uniform Crossover method.
@@ -10,7 +10,7 @@ import java.util.Random;
 public class UniformCrossover extends Crossover {
 
   /** Random number generator for crossover decisions. */
-  private Random r = new Random();
+  private SecureRandom r = new SecureRandom();
   
 	
 	/**

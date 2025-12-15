@@ -8,6 +8,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ class OnePointCrossoverTest {
      * - nextDouble(): un valor fijo
      * - nextInt(bound): primero la posición de corte, luego la elección (0 o 1)
      */
-    private static class TestRandom extends Random {
+    private static class TestRandom extends SecureRandom {
         private final double doubleValue;
         private final int posValue;
         private final int choiceValue;

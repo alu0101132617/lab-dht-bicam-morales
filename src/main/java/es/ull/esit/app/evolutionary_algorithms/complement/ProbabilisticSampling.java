@@ -1,8 +1,8 @@
 package es.ull.esit.app.evolutionary_algorithms.complement;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import es.ull.esit.app.metaheuristics.generators.GeneratorType;
 import es.ull.esit.app.metaheurictics.strategy.Strategy;
@@ -14,7 +14,7 @@ import es.ull.esit.app.problem.definition.State;
 public class ProbabilisticSampling extends Sampling {
 
   /** Random number generator used for sampling operations. */
-  private Random r = new Random();
+  private SecureRandom r = new SecureRandom();
 
   /**
    * Applies the probabilistic sampling operation to generate new states based on

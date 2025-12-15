@@ -1,5 +1,6 @@
 package es.ull.esit.app.evolutionary_algorithms.complement;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import es.ull.esit.app.problem.definition.State;
  * Class implementing the roulette wheel selection method for selecting parents in an evolutionary algorithm.
  */
 public class RouletteSelection extends FatherSelection {
+
+  /** Random number generator used for selection operations. */
+  private SecureRandom random = new SecureRandom();
 
   /**
    * Selects parents from the given list of states using the roulette wheel selection method.
@@ -42,7 +46,7 @@ public class RouletteSelection extends FatherSelection {
 		}
 		List<State> fatherList = new ArrayList<>();
 		for (int j = 0; j < listState.size(); j++) {
-			float numbAleatory = (float) (Math.random() * 1.0);
+			float numbAleatory = (float) (random.nextDouble() * 1.0);
 			boolean find = false;
 			int i = 0;
 			while ((!find) && (i < listLimit.size())){
